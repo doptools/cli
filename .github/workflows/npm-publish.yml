@@ -1,0 +1,31 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://help.github.com/actions/language-and-framework-guides/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - master
+
+jobs:
+  publish-gpr:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: Publish new version to NPM
+          uses: actions/setup-node@v1
+          with:
+            node-version: 13.x
+            registry-url: 'https://npm.pkg.github.com/'
+            always-auth: true
+            scope: dops
+        - name: Config Yarn
+          working-directory: dops-cli
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: |
+            yarn install --frozen-lockfile
+            yarn publish --access restricted
+       
