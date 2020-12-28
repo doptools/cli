@@ -20,12 +20,11 @@ jobs:
             node-version: 13.x
             registry-url: 'https://npm.pkg.github.com/'
             always-auth: true
-            scope: dops
+            scope: doptools
         - name: Config Yarn
-          working-directory: dops-cli
           env:
             NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           run: |
             yarn install --frozen-lockfile
             yarn publish --access restricted
-       
+

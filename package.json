@@ -1,12 +1,12 @@
 {
-  "name": "@dops/cli",
+  "name": "@doptools/cli",
   "description": "build and deployment tools",
   "version": "0.0.0",
   "author": "Dan Erdelt @myrddraall",
   "bin": {
     "dops": "./bin/run"
   },
-  "bugs": "https://github.com/connceptualpathways/dops/issues",
+  "bugs": "https://github.com/doptools/cli/issues",
   "dependencies": {
     "@oclif/command": "^1",
     "@oclif/config": "^1",
@@ -33,7 +33,7 @@
     "/npm-shrinkwrap.json",
     "/oclif.manifest.json"
   ],
-  "homepage": "https://github.com/connceptualpathways/dops",
+  "homepage": "https://github.com/doptools/cli",
   "keywords": [
     "oclif"
   ],
