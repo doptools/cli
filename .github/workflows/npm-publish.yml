@@ -21,10 +21,12 @@ jobs:
             registry-url: 'https://npm.pkg.github.com/'
             always-auth: true
             scope: doptools
-        - name: Config Yarn
+        - name: Install Dependancies
           env:
             NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            yarn install --frozen-lockfile
-            yarn publish --access restricted
+          run: yarn install --frozen-lockfile
+        - name: Publish
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: yarn publish --access restricted
 
