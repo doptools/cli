@@ -9,7 +9,7 @@ on:
 jobs:
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
-  
+
   publish:
     runs-on: ubuntu-latest
 
@@ -45,6 +45,9 @@ jobs:
 
       - name: Set Version
         run: yarn version --no-git-tag-version --new-version ${{ steps.version.outputs.fullversion }}
+
+      - name: Create Autoupdates 
+        run: npx @oclif/dev-cli pack
 
       - name: Publish
         env:
