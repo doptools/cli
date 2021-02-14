@@ -43,6 +43,7 @@
   "oclif": {
     "commands": "./lib/commands",
     "bin": "dops",
+    
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-not-found",
