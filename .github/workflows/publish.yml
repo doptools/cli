@@ -24,29 +24,25 @@ jobs:
 
       - name: Parse Version
         id: version
-        uses: booxmedialtd/ws-action-parse-semver@v1
+        uses: doptools/action-parse-semver@main
         with:
-          input_string: "${{ github.ref }}"
-          version_extractor_regex: '\/v(.*)$'
+          version: "${{ github.ref }}"
+          versionRegex: '\/v(.*)$'
 
       - name: Config
         id: config
         run: |
           if [ -z "${{ steps.version.outputs.prerelease }}" ]; then
-             echo "Is Release"
-             echo "::set-output name=prerelease::false"
-             echo "::set-output name=tarPath::./dist/dops-${{ steps.version.outputs.fullversion }}/dops-${{ steps.version.outputs.fullversion }}"
+             echo "::set-output name=tarPath::./dist/dops-${{ steps.version.outputs.full }}/dops-${{ steps.version.outputs.full }}"
            else
-             echo "Is Prerelease"
-             echo "::set-output name=prerelease::true"
-             echo "::set-output name=tarPath::./dist/channels/${{ steps.version.outputs.prerelease }}/dops-${{ steps.version.outputs.fullversion }}/dops-${{ steps.version.outputs.fullversion }}"
+             echo "::set-output name=tarPath::./dist/channels/${{ steps.version.outputs.prereleaseId }}/dops-${{ steps.version.outputs.full }}/dops-${{ steps.version.outputs.full }}"
            fi
 
       - name: Install
         run: yarn install
 
       - name: Set Version
-        run: yarn version --no-git-tag-version --new-version ${{ steps.version.outputs.fullversion }}
+        run: yarn version --no-git-tag-version --new-version ${{ steps.version.outputs.full }}
 
       - name: Create Autoupdates 
         run: npx @oclif/dev-cli pack
@@ -67,7 +63,7 @@ jobs:
           body: |
             Generated Release ${{ github.ref }}
           draft: false
-          prerelease: ${{ steps.config.outputs.prerelease }}
+          prerelease: ${{ steps.config.outputs.isPrerelease }}
 
       - name: Upload Release Asset
         id: upload-release-asset 
@@ -77,5 +73,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ${{ steps.config.outputs.tarPath }}.tar.gz
-          asset_name: dops-cli-${{ steps.version.outputs.fullversion }}.tar.gz
+          asset_name: dops-cli-${{ steps.version.outputs.full }}.tar.gz
           asset_content_type: application/gzip
