@@ -1,7 +1,7 @@
 {
   "name": "@doptools/cli",
   "description": "build and deployment tools",
-  "version": "0.0.1-dev.3",
+  "version": "0.0.1",
   "author": "Dan Erdelt @myrddraall",
   "bin": {
     "dops": "./bin/run"
