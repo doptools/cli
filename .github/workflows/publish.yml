@@ -33,9 +33,9 @@ jobs:
         id: config
         run: |
           if [ -z "${{ steps.version.outputs.prerelease }}" ]; then
-             echo "::set-output name=tarPath::./dist/dops-${{ steps.version.outputs.full }}/dops-${{ steps.version.outputs.full }}"
+             echo "::set-output name=tarPath::./dist/dops-v${{ steps.version.outputs.full }}/dops-v${{ steps.version.outputs.full }}"
            else
-             echo "::set-output name=tarPath::./dist/channels/${{ steps.version.outputs.prereleaseId }}/dops-${{ steps.version.outputs.full }}/dops-${{ steps.version.outputs.full }}"
+             echo "::set-output name=tarPath::./dist/channels/${{ steps.version.outputs.prereleaseId }}/dops-v${{ steps.version.outputs.full }}/dops-v${{ steps.version.outputs.full }}"
            fi
 
       - name: Install
