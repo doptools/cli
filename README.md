@@ -15,11 +15,11 @@ build and deployment tools
 # Usage
 <!-- usage -->
 ```sh-session
-$ npm install -g @dops/cli
+$ npm install -g @doptools/cli
 $ dops COMMAND
 running command...
 $ dops (-v|--version|version)
-@dops/cli/0.0.0 win32-x64 node-v12.14.1
+@doptools/cli/0.0.1-0 linux-x64 node-v14.15.5
 $ dops --help [COMMAND]
 USAGE
   $ dops COMMAND
@@ -49,7 +49,7 @@ EXAMPLE
   hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/connceptualpathways/dops/blob/v0.0.0/src/commands/hello.ts)_
+_See code: [src/commands/hello.ts](https://github.com/doptools/cli/blob/v0.0.1-0/src/commands/hello.ts)_
 
 ## `dops help [COMMAND]`
 
