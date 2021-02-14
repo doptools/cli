@@ -19,7 +19,7 @@ $ npm install -g @doptools/cli
 $ dops COMMAND
 running command...
 $ dops (-v|--version|version)
-@doptools/cli/0.0.1-dev.2 linux-x64 node-v14.15.5
+@doptools/cli/0.0.1-dev.3 linux-x64 node-v14.15.5
 $ dops --help [COMMAND]
 USAGE
   $ dops COMMAND
@@ -30,6 +30,7 @@ USAGE
 <!-- commands -->
 * [`dops hello [FILE]`](#dops-hello-file)
 * [`dops help [COMMAND]`](#dops-help-command)
+* [`dops update [CHANNEL]`](#dops-update-channel)
 
 ## `dops hello [FILE]`
 
@@ -49,7 +50,7 @@ EXAMPLE
   hello world from ./src/hello.ts!
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/doptools/cli/blob/v0.0.1-dev.2/src/commands/hello.ts)_
+_See code: [src/commands/hello.ts](https://github.com/doptools/cli/blob/v0.0.1-dev.3/src/commands/hello.ts)_
 
 ## `dops help [COMMAND]`
 
@@ -67,4 +68,15 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1/src/commands/help.ts)_
+
+## `dops update [CHANNEL]`
+
+update the dops CLI
+
+```
+USAGE
+  $ dops update [CHANNEL]
+```
+
+_See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v1.3.10/src/commands/update.ts)_
 <!-- commandsstop -->
