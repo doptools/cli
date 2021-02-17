@@ -1,7 +1,7 @@
 {
   "name": "@doptools/cli",
   "description": "build and deployment tools",
-  "version": "0.0.3-dev.2",
+  "version": "0.0.0-dev.0",
   "author": "Dan Erdelt @myrddraall",
   "bin": {
     "dops": "./bin/run"
@@ -50,7 +50,10 @@
       "@oclif/plugin-not-found",
       "@oclif/plugin-update",
       "@oclif/plugin-plugins"
-    ]
+    ],
+    "hooks": {
+      "version:apply": "./lib/hooks/version/apply"
+    }
   },
   "repository": "doptools/cli",
   "scripts": {
