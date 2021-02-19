@@ -1,8 +1,7 @@
 import { Hook, load } from '@oclif/config'
 
 export default async function (opts: any) {
-  console.log(opts.config.loadPlugins);
-  process.stdout.write(`apply v hook ${opts.version}\n`);
+  //process.stdout.write(`apply v hook ${opts.version}\n`);
 }
 
 /*
