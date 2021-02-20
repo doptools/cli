@@ -1,5 +1,55 @@
 #!/usr/bin/env node
+const resolvePackagePath = require('resolve-package-path');
+const semver = require('semver');
+//const semver = require('semver');
 
-require('@oclif/command').run()
-.then(require('@oclif/command/flush'))
-.catch(require('@oclif/errors/handle'))
+const Path = require('path');
+
+
+function spawnLocal(localBin, argv) {
+    console.info('Switching to local version');
+    const children = require('child_process');
+    const result = children.spawnSync(localBin, [...argv].slice(2), { stdio: 'inherit' });
+    process.exit(result.status);
+}
+
+function checkVersions(currentPkg, localPkg) {
+    const currentVersion = semver.parse(currentPkg.version);
+    const localVersion = semver.parse(localPkg.version);
+
+    switch (currentVersion.compare(localVersion)) {
+        case 1:
+            console.warn('gobal newer than local', currentVersion.version, localVersion.version);
+            break;
+        case -1:
+            console.warn('local newer than global', currentVersion.version, localVersion.version);
+            break;
+    }
+}
+
+function execute() {
+    require('@oclif/command').run()
+        .then(require('@oclif/command/flush'))
+        .catch(require('@oclif/errors/handle'));
+}
+
+(function main(argv) {
+    const localCli = argv.indexOf('-g') === -1 ? resolvePackagePath('@doptools/cli', process.cwd()) : null;
+    argv.splice(2, 0, '-g');
+    if (localCli !== null) {
+        argv.splice(2, 1);
+        const cliRoot = Path.dirname(localCli);
+        const localPkg = require(localCli);
+
+        const localBin = Path.join(cliRoot, localPkg.bin.dops);
+        if (localBin !== __filename) {
+            const currentPkg = require(Path.join(__dirname, '..', 'package.json'));
+            checkVersions(currentPkg, localPkg);
+            spawnLocal(localBin, argv);
+        }
+    }
+    execute();
+})(process.argv);
+
+
+

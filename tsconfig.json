@@ -1,12 +1,23 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "importHelpers": true,
-    "module": "commonjs",
+    "module": "CommonJS",
+    "target": "ES2019",
+    "moduleResolution": "node",
     "outDir": "lib",
     "rootDir": "src",
     "strict": true,
-    "target": "es2017"
+    "strictNullChecks": true,
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "preserveSymlinks": true,
+    "esModuleInterop": true,
+    "inlineSourceMap": true,
+    "declaration": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
   "include": [
     "src/**/*"
