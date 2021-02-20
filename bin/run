@@ -27,20 +27,19 @@ function checkVersions(currentPkg, localPkg) {
     }
 }
 
-function execute() {
-    require('@oclif/command').run()
+function execute(argv) {
+    require('@oclif/command').run(argv)
         .then(require('@oclif/command/flush'))
         .catch(require('@oclif/errors/handle'));
 }
 
 (function main(argv) {
-    const localCli = argv.indexOf('-g') === -1 ? resolvePackagePath('@doptools/cli', process.cwd()) : null;
-    argv.splice(2, 0, '-g');
+    argv = argv.slice(2);
+    const runGlobal = !!(argv[0] === 'global' ? argv.shift() : '');
+    const localCli = !runGlobal ? resolvePackagePath('@doptools/cli', process.cwd()) : null;
     if (localCli !== null) {
-        argv.splice(2, 1);
         const cliRoot = Path.dirname(localCli);
         const localPkg = require(localCli);
-
         const localBin = Path.join(cliRoot, localPkg.bin.dops);
         if (localBin !== __filename) {
             const currentPkg = require(Path.join(__dirname, '..', 'package.json'));
@@ -48,7 +47,7 @@ function execute() {
             spawnLocal(localBin, argv);
         }
     }
-    execute();
+    execute(argv);
 })(process.argv);
 
 
