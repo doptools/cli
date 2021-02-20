@@ -19,7 +19,7 @@ $ npm install -g @doptools/cli
 $ dops COMMAND
 running command...
 $ dops (-v|--version|version)
-@doptools/cli/0.0.0-dev.3 linux-x64 node-v14.15.5
+@doptools/cli/0.0.0-dev.4 linux-x64 node-v14.15.5
 $ dops --help [COMMAND]
 USAGE
   $ dops COMMAND
@@ -39,7 +39,7 @@ USAGE
   $ dops
 ```
 
-_See code: [src/commands/index.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.3/src/commands/index.ts)_
+_See code: [src/commands/index.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.4/src/commands/index.ts)_
 
 ## `dops help [COMMAND]`
 
