@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 const resolvePackagePath = require('resolve-package-path');
 const semver = require('semver');
+const chalk = require('chalk');
 //const semver = require('semver');
 
 const Path = require('path');
 
-
 function spawnLocal(localBin, argv) {
-    console.info('Switching to local version');
+    console.info(chalk.gray('Switching to local version'));
     const children = require('child_process');
     const result = children.spawnSync(localBin, [...argv].slice(2), { stdio: 'inherit' });
     process.exit(result.status);
@@ -19,10 +19,12 @@ function checkVersions(currentPkg, localPkg) {
 
     switch (currentVersion.compare(localVersion)) {
         case 1:
-            console.warn('gobal newer than local', currentVersion.version, localVersion.version);
+            console.warn(chalk.yellow(`The project's cli ${chalk.white(`[${localVersion.version}]`)} is older that the gobal ${chalk.white(`[${currentVersion.version}]`)}. 
+Consiger updating using \`${chalk.white('npm i -D @doptools/cli@latest')}\` or \`${chalk.white('yarn add -D @doptools/cli@latest')}\``));
             break;
         case -1:
-            console.warn('local newer than global', currentVersion.version, localVersion.version);
+            console.warn(chalk.yellow(`The project's cli ${chalk.white(`[${localVersion.version}]`)} is newer that the gobal ${chalk.white(`[${currentVersion.version}]`)}. 
+Consiger updating using \`${chalk.white('npm i -g @doptools/cli@latest')}\` or \`${chalk.white('yarn global add @doptools/cli@latest')}\``));
             break;
     }
 }
@@ -36,14 +38,11 @@ function execute(argv) {
 (function main(argv) {
     argv = argv.slice(2);
     const runGlobal = !!(argv[0] === 'global' ? argv.shift() : '');
-    console.log('runGlobal', runGlobal);
     const localCli = !runGlobal ? resolvePackagePath('@doptools/cli', process.cwd()) : null;
-    console.log('localCli', localCli);
     if (localCli !== null) {
         const cliRoot = Path.dirname(localCli);
         const localPkg = require(localCli);
         const localBin = Path.join(cliRoot, localPkg.bin.dops);
-        console.log('localBin', localBin, __filename);
         if (localBin !== __filename) {
             const currentPkg = require(Path.join(__dirname, '..', 'package.json'));
             checkVersions(currentPkg, localPkg);
