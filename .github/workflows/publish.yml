@@ -21,6 +21,8 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           always-auth: true
           scope: "doptools"
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: Parse Version
         id: version
