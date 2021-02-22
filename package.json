@@ -10,19 +10,28 @@
   "bugs": "https://github.com/doptools/cli/issues",
   "dependencies": {
     "@angular-devkit/schematics": "^11.2.1",
-    "@doptools/tslib-cli-core": "^0.0.0-dev.2",
+    "@doptools/plugin-version": "^0.0.0-dev.5",
+    "@doptools/tslib-cli-core": "^0.0.0-dev.4",
+    "@doptools/version": "^0.0.1-alpha.0",
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
     "@oclif/plugin-not-found": "^1.2.4",
+    "@oclif/plugin-plugins": "^1.9.5",
     "@oclif/plugin-update": "^1.3.10",
+    "@octokit/rest": "^18.2.0",
+    "cli-ux": "^5.5.1",
+    "jsonc": "^2.0.0",
     "minimist": "^1.2.5",
+    "npm-package-arg": "^8.1.1",
     "resolve-package-path": "^3.1.0",
-    "tslib": "^2.1.0"
+    "tslib": "^2.1.0",
+    "type-fest": "^0.21.1"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@types/node": "14",
+    "@types/npm-package-arg": "^6.1.0",
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
@@ -51,7 +60,13 @@
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-not-found",
-      "@oclif/plugin-update"
+      "@oclif/plugin-update",
+      {
+        "type": "user",
+        "name": "@doptools/plugin-version",
+        "url": "@doptools/plugin-version",
+        "tag": "latest"
+      }
     ],
     "hooks": {
       "version:apply": "./lib/hooks/version/apply",
