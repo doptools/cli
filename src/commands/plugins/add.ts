@@ -8,7 +8,7 @@ export default class PluginAddCommand extends CommandBase {
         required: true,
         description: 'The plugin to add'
     })
-    public plugin?:string;
+    public plugin?: string;
 
     async run(): Promise<any> {
         await installPlugin(this.config, this.plugin!, { verbose: true });

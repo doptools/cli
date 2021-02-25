@@ -1,7 +1,8 @@
 import { CliCommand, CommandBase, Shell } from '@doptools/tslib-cli-core';
 
 @CliCommand({
-    description: "Initialize Project",
+    description: "Run dops commands in the global context",
+    
     hidden: process.env.GLOBAL_CLI === 'true'
 })
 export default class InitProjectCommand extends CommandBase {

@@ -32,7 +32,7 @@ export default class PluginsListCommand extends CommandBase {
                 version: plugin.version
             }))
 
-        if(!this.all){
+        if (!this.all) {
             plugins = plugins.filter(_ => _.type !== 'main' && _.type !== 'core');
         }
 

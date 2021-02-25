@@ -1,4 +1,4 @@
-import { Shell, Yarn } from '@doptools/tslib-cli-core';
+import { Yarn } from '@doptools/tslib-cli-core';
 import { IConfig, PJSON } from '@oclif/config';
 import { Octokit } from '@octokit/rest';
 import { realpathSync } from 'fs';
@@ -13,13 +13,6 @@ export interface IPluginInstallOptions {
     force: boolean;
     verbose: boolean;
 }
-
-const DefaultPluginInstallOptions: IPluginInstallOptions = {
-    force: false,
-    verbose: false,
-}
-
-
 
 async function resolvePackageInfo(plugin: string) {
     const result = packageArgs(plugin);
@@ -139,6 +132,7 @@ async function installPluginSpec(pluginSpec: PJSON.PluginTypes.User) {
     const installed = !!resolvePackage(pluginName, PATH_CLI);
     console.log('plugin', plugin);
     console.log('PATH_CLI', PATH_CLI);
+
     let code;
     if (code = Yarn.add(plugin, { cwd: PATH_CLI })) {
         throw new Error(`Could not add package '${plugin}'. Yarn exited with code: ${code}`);

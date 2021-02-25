@@ -1,12 +1,10 @@
 
-// Cannot use dependancies here. this will run before the package manager has installed them
+// Cannot use runtime dependancies here. this will run before the package manager has installed them
 
 import type { PJSON } from '@oclif/config';
-import type { PackageJson } from 'type-fest';
-//import { jsonc } from 'jsonc';
-//import { findUpPackagePath } from 'resolve-package-path';
+import { existsSync, readFileSync, writeFileSync } from 'fs';
 import Path from 'path';
-import { readFileSync, writeFileSync, existsSync } from 'fs'
+import type { PackageJson } from 'type-fest';
 
 function readSync(path: string): PackageJson {
     return JSON.parse(readFileSync(path, { encoding: 'utf-8' }));
@@ -59,15 +57,12 @@ export function initPlugins() {
                 });
                 if (changed) {
                     writeSync(cliPkgPath!, cliPkg);
-                    // Shell.exec('yarn', { cwd: Path.dirname(cliPkgPath) });
                 }
                 return changed;
             }
         }
     } catch (e) {
-        console.log((e as Error).name);
-        console.log((e as Error).message);
-        console.log((e as Error).stack);
+        console.error(e);
         throw e;
     }
     return changed;
