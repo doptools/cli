@@ -47,90 +47,94 @@ async function execute(argv, global) {
     const cwd = process.cwd();
     let resolved = resolvePackagePath('@doptools/cli', cwd);
     resolved = resolved ? Path.dirname(resolved) : null;
- 
+
     const noLocal = resolved === null;
-    const isInstall = cwd === resolved;
+    const isInstall = cwd === resolved || argv.indexOf('--preInstallInit') !== -1;
     const isDebug = cwd === binPath;
     let isGlobal = true;
-    if(!isInstall){
-        isGlobal = noLocal || binPath !== resolved; 
+    if (!isInstall) {
+        isGlobal = noLocal || binPath !== resolved;
     }
-    
+
     argv = argv.slice(2);
     const forceGlobal = argv[0] === 'global';
-    if(forceGlobal){
+    if (forceGlobal) {
         argv.shift();
     }
-    
-    /*console.log('cwd       :', cwd);
+/*
+    console.log('cwd       :', cwd);
     console.log('resolved  :', resolved);
     console.log('binPath   :', binPath);
-    
+
     console.log('noLocal      :', noLocal);
     console.log('isInstall    :', isInstall);
     console.log('isGlobal     :', isGlobal);
     console.log('isDebug      :', isDebug);
-    console.log('forceGlobal  :', forceGlobal);*/
-    
-    if(isInstall){
+    console.log('forceGlobal  :', forceGlobal);
+*/
+    if (isInstall && isDebug) {
+        return;
+    }
+
+    if (isInstall) {
         const initPlugins = require('../lib/util/initPlugin').initPlugins;
         initPlugins();
         return;
     }
-    
-   // console.log(argv);
- 
-    if(isDebug || noLocal || forceGlobal === isGlobal){
+
+    // console.log(argv);
+
+    if (isDebug || noLocal || forceGlobal === isGlobal) {
         execute(argv, isDebug || isGlobal);
         return;
     }
 
-    if(isGlobal){
+    if (isGlobal) {
         spawnContext(Path.join(resolved, 'bin', 'run'), argv);
         return;
     }
     throw new Error("NYI: local cli trying to run globally");
 
-/*
-    let globalCliPath = resolvePackagePath('@doptools/cli');
-    let localCliPath = resolvePackagePath('@doptools/cli', process.cwd());
-
+    /*
+        let globalCliPath = resolvePackagePath('@doptools/cli');
+        let localCliPath = resolvePackagePath('@doptools/cli', process.cwd());
     
-    const noLocal = localCliPath === null;
-    let forceGlobal = false;
-    if (argv[0] === 'global') {
-        forceGlobal = true;
-        argv.shift();
-    }
-    if (isDebug || noLocal) {
-        execute(argv, true);
-        return;
-    }
-
-    localCliPath = Path.dirname(localCliPath);
-    const currentCliPath = Path.dirname(__dirname);
-
-    // require.resolve('@doptools/cli')
-    //console.log(require.resolve('@doptools/cli', {paths:['../../']}));
-
-
-    let isGlobal = globalCliPath !== null && currentCliPath === Path.dirname(globalCliPath);
-    if (localCliPath === Path.dirname(globalCliPath)) {
-        isGlobal = false;
-    }
-
-    if (forceGlobal == isGlobal) {
-        execute(argv, isGlobal);
-        return;
-    }
-
-    if (isGlobal) {
-        spawnContext(Path.join(localCliPath, 'bin', 'run'), argv);
-        return;
-    }
-
-    throw new Error("NYI: local cli trying to run globally");
-    */
+        
+        const noLocal = localCliPath === null;
+        let forceGlobal = false;
+        if (argv[0] === 'global') {
+            forceGlobal = true;
+            argv.shift();
+        }
+        if (isDebug || noLocal) {
+            execute(argv, true);
+            return;
+        }
+    
+        localCliPath = Path.dirname(localCliPath);
+        const currentCliPath = Path.dirname(__dirname);
+    
+        // require.resolve('@doptools/cli')
+        //console.log(require.resolve('@doptools/cli', {paths:['../../']}));
+    
+    
+        let isGlobal = globalCliPath !== null && currentCliPath === Path.dirname(globalCliPath);
+        if (localCliPath === Path.dirname(globalCliPath)) {
+            isGlobal = false;
+        }
+    
+        if (forceGlobal == isGlobal) {
+            execute(argv, isGlobal);
+            return;
+        }
+    
+        if (isGlobal) {
+            spawnContext(Path.join(localCliPath, 'bin', 'run'), argv);
+            return;
+        }
+    
+        throw new Error("NYI: local cli trying to run globally");
+        */
 })(process.argv);
 
 
