@@ -25,7 +25,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ github.token }}
 
       - name: Install
-        run: yarn install
+        run: |
+          yarn global add ts-node
+          yarn install
 
       - name: Run Help
         run: |
