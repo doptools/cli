@@ -8,4 +8,4 @@
 node_modules
 oclif.manifest.json
 oclif.manifest.json
-doptools-cli-v0.0.0-dev.8.tgz
+/*.tgz

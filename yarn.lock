@@ -43,10 +43,10 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@doptools/tslib-cli-core@^0.0.0-dev.4":
-  version "0.0.0-dev.4"
-  resolved "https://npm.pkg.github.com/download/@doptools/tslib-cli-core/0.0.0-dev.4/84e3c969cf7a24876e9f44a5b1bc90679127e2ac2d26776c14541f1a2f8689e3#0fa79fc0381ec352793a54a805fb008a4628b6e4"
-  integrity sha512-MfG4GWJNcdmM6ql/zvqITzTlaqurD5+9sxUlkdJoyR9gOZlqGKpIYui147qnHOUnga0rtehTib0/2lcZXmOIpA==
+"@doptools/tslib-cli-core@^0.0.0-dev.7":
+  version "0.0.0-dev.7"
+  resolved "https://npm.pkg.github.com/download/@doptools/tslib-cli-core/0.0.0-dev.7/597f2041d19e03130dc1b96476819c7f7746133b4a878a67ae33b192134739e4#a24e6b83db9a9dff5261e23dd6600ef682c59fc3"
+  integrity sha1-ok5rg9uanf9SYeI91mAO9oLFn8M=
   dependencies:
     "@angular-devkit/schematics" "^11.2.1"
     "@oclif/command" "^1.8.0"

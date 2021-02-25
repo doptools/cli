@@ -15,14 +15,16 @@ function writeSync(path: string, data: any): void {
     writeFileSync(path, JSON.stringify(data, undefined, 4));
 }
 
-function findUpPackagePath(path: string): string {
-    while(true){
+function findUpPackagePath(path: string): string | null {
+    const root = Path.resolve('/');
+    path = Path.normalize(path);
+    while (true) {
         const pkg = Path.join(path, 'package.json');
-        if(existsSync(pkg)){
+        if (existsSync(pkg)) {
             return pkg;
         }
-        if(!path){
-            return '';
+        if (!path || root === path) {
+            return null;
         }
         path = Path.dirname(path);
     }
@@ -33,12 +35,12 @@ export function initPlugins() {
     try {
         const pkgSearchPath = Path.normalize(Path.join(process.cwd(), '..'));
         const pkgPath = findUpPackagePath(pkgSearchPath);
-        if (pkgPath != null) {
+        if (pkgPath !== null) {
             const pkg = readSync(pkgPath) as PackageJson & { dops: any };
             if (Array.isArray(pkg.dops?.plugins)) {
                 const cliPkgSearchPath = Path.normalize(Path.join(process.cwd()));
                 const cliPkgPath = findUpPackagePath(cliPkgSearchPath);
-                const cliPkg = readSync(cliPkgPath) as PackageJson & { dops: any } & PJSON.CLI;
+                const cliPkg = readSync(cliPkgPath!) as PackageJson & { dops: any } & PJSON.CLI;
                 const cliPlugins: Array<string | PJSON.PluginTypes.User | PJSON.PluginTypes.Link> = cliPkg.oclif.plugins = cliPkg.oclif.plugins ?? [];
                 const cliDeps = cliPkg.dependencies = cliPkg.dependencies ?? {};
 
@@ -56,7 +58,7 @@ export function initPlugins() {
                     }
                 });
                 if (changed) {
-                    writeSync(cliPkgPath, cliPkg);
+                    writeSync(cliPkgPath!, cliPkg);
                     // Shell.exec('yarn', { cwd: Path.dirname(cliPkgPath) });
                 }
                 return changed;

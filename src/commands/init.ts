@@ -2,6 +2,8 @@ import { BooleanFlag, CliCommand, CommandBase, Shell } from '@doptools/tslib-cli
 import { existsSync } from 'fs'
 import Path from 'path'
 
+console.log('InitProjectCommand', process.cwd(), existsSync(Path.join(process.cwd(), 'package.json')), existsSync(Path.join(process.cwd(), 'node_modules')), !existsSync(Path.join(process.cwd(), 'package.json')) || existsSync(Path.join(process.cwd(), 'node_modules')));
+
 @CliCommand({
     description: "Initialize Project",
     hidden: !existsSync(Path.join(process.cwd(), 'package.json')) || existsSync(Path.join(process.cwd(), 'node_modules'))
