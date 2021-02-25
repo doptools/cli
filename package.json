@@ -10,9 +10,7 @@
   "bugs": "https://github.com/doptools/cli/issues",
   "dependencies": {
     "@angular-devkit/schematics": "^11.2.1",
-    "@doptools/plugin-version": "^0.0.0-dev.5",
     "@doptools/tslib-cli-core": "^0.0.0-dev.4",
-    "@doptools/version": "^0.0.1-alpha.0",
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
@@ -25,6 +23,7 @@
     "minimist": "^1.2.5",
     "npm-package-arg": "^8.1.1",
     "resolve-package-path": "^3.1.0",
+    "semver": "^7.3.4",
     "tslib": "^2.1.0",
     "type-fest": "^0.21.1"
   },
@@ -32,6 +31,7 @@
     "@oclif/dev-cli": "^1.26.0",
     "@types/node": "14",
     "@types/npm-package-arg": "^6.1.0",
+    "@types/semver": "^7.3.4",
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
@@ -60,22 +60,14 @@
     "plugins": [
       "@oclif/plugin-help",
       "@oclif/plugin-not-found",
-      "@oclif/plugin-update",
-      {
-        "type": "user",
-        "name": "@doptools/plugin-version",
-        "url": "@doptools/plugin-version",
-        "tag": "latest"
-      }
+      "@oclif/plugin-update"
     ],
     "hooks": {
-      "version:apply": "./lib/hooks/version/apply",
-      "init": "./lib/hooks/init/load-local-plugins"
     }
   },
   "repository": "doptools/cli",
   "scripts": {
-    "postinstall": "dops plugins:_init",
+    "preinstall": "./bin/run",
     "postpack": "rimraf oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
     "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",

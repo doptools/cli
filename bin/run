@@ -47,6 +47,7 @@ async function execute(argv, global) {
     const cwd = process.cwd();
     let resolved = resolvePackagePath('@doptools/cli', cwd);
     resolved = resolved ? Path.dirname(resolved) : null;
+ 
     const noLocal = resolved === null;
     const isInstall = cwd === resolved;
     const isDebug = cwd === binPath;
@@ -55,26 +56,31 @@ async function execute(argv, global) {
         isGlobal = noLocal || binPath !== resolved; 
     }
     
-    
     argv = argv.slice(2);
-    
     const forceGlobal = argv[0] === 'global';
     if(forceGlobal){
         argv.shift();
     }
-
-    console.log('cwd       :', cwd);
+    
+    /*console.log('cwd       :', cwd);
     console.log('resolved  :', resolved);
     console.log('binPath   :', binPath);
-
+    
     console.log('noLocal      :', noLocal);
     console.log('isInstall    :', isInstall);
     console.log('isGlobal     :', isGlobal);
     console.log('isDebug      :', isDebug);
-    console.log('forceGlobal  :', forceGlobal);
-
-
-    if(isDebug || isInstall || noLocal || forceGlobal === isGlobal){
+    console.log('forceGlobal  :', forceGlobal);*/
+    
+    if(isInstall){
+        const initPlugins = require('../lib/util/initPlugin').initPlugins;
+        initPlugins();
+        return;
+    }
+    
+   // console.log(argv);
+ 
+    if(isDebug || noLocal || forceGlobal === isGlobal){
         execute(argv, isDebug || isGlobal);
         return;
     }

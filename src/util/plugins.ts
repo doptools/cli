@@ -1,4 +1,4 @@
-import { Yarn } from '@doptools/tslib-cli-core';
+import { Shell, Yarn } from '@doptools/tslib-cli-core';
 import { IConfig, PJSON } from '@oclif/config';
 import { Octokit } from '@octokit/rest';
 import { realpathSync } from 'fs';
@@ -102,8 +102,6 @@ export async function writeCliPackageJson(data: PackageJson) {
     return await jsonc.write(PATH_CLI_PACKAGEJSON, data, { space: 2 });
 }
 
-
-
 export async function installPlugin(config: IConfig, plugin: string, opts: Partial<IPluginInstallOptions> = {}) {
     const pluginSource = await resolvePackageInfo(plugin);
     if (pluginSource === null) {
@@ -119,7 +117,7 @@ export async function installPlugin(config: IConfig, plugin: string, opts: Parti
 
     if (process.env.GLOBAL_CLI !== 'true') {
         const localPkgPath = Path.join(process.cwd(), 'package.json');
-        
+
         const localPkg = await jsonc.read(localPkgPath, { stripComments: true }) as PackageJson & { dops?: { plugins?: PJSON.PluginTypes.User[] } };
         localPkg.dops ??= {};
         localPkg.dops.plugins ??= [];
@@ -139,6 +137,8 @@ async function installPluginSpec(pluginSpec: PJSON.PluginTypes.User) {
     const plugin = pluginSpec.url!;
     const pluginName = pluginSpec.name!;
     const installed = !!resolvePackage(pluginName, PATH_CLI);
+    console.log('plugin', plugin);
+    console.log('PATH_CLI', PATH_CLI);
     let code;
     if (code = Yarn.add(plugin, { cwd: PATH_CLI })) {
         throw new Error(`Could not add package '${plugin}'. Yarn exited with code: ${code}`);
