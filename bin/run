@@ -35,7 +35,7 @@ async function execute(argv, global) {
         await require('@oclif/command').run(argv)
             .then(require('@oclif/command/flush'));
     } catch (e) {
-        if(e.code !== 'EEXIT'){
+        if (e.code !== 'EEXIT') {
             console.error(e);
         }
         require('@oclif/errors/handle')(e);
@@ -43,10 +43,53 @@ async function execute(argv, global) {
 }
 
 (function main(argv) {
+    const binPath = Path.dirname(Path.dirname(argv[1]));
+    const cwd = process.cwd();
+    let resolved = resolvePackagePath('@doptools/cli', cwd);
+    resolved = resolved ? Path.dirname(resolved) : null;
+    const noLocal = resolved === null;
+    const isInstall = cwd === resolved;
+    const isDebug = cwd === binPath;
+    let isGlobal = true;
+    if(!isInstall){
+        isGlobal = noLocal || binPath !== resolved; 
+    }
+    
+    
     argv = argv.slice(2);
+    
+    const forceGlobal = argv[0] === 'global';
+    if(forceGlobal){
+        argv.shift();
+    }
+
+    console.log('cwd       :', cwd);
+    console.log('resolved  :', resolved);
+    console.log('binPath   :', binPath);
+
+    console.log('noLocal      :', noLocal);
+    console.log('isInstall    :', isInstall);
+    console.log('isGlobal     :', isGlobal);
+    console.log('isDebug      :', isDebug);
+    console.log('forceGlobal  :', forceGlobal);
+
+
+    if(isDebug || isInstall || noLocal || forceGlobal === isGlobal){
+        execute(argv, isDebug || isGlobal);
+        return;
+    }
+
+    if(isGlobal){
+        spawnContext(Path.join(resolved, 'bin', 'run'), argv);
+        return;
+    }
+    throw new Error("NYI: local cli trying to run globally");
+
+/*
     let globalCliPath = resolvePackagePath('@doptools/cli');
     let localCliPath = resolvePackagePath('@doptools/cli', process.cwd());
-    const isDebug = (globalCliPath ?? localCliPath) === null;
+
+    
     const noLocal = localCliPath === null;
     let forceGlobal = false;
     if (argv[0] === 'global') {
@@ -61,7 +104,14 @@ async function execute(argv, global) {
     localCliPath = Path.dirname(localCliPath);
     const currentCliPath = Path.dirname(__dirname);
 
-    const isGlobal = globalCliPath !== null && currentCliPath === Path.dirname(globalCliPath);
+    // require.resolve('@doptools/cli')
+    //console.log(require.resolve('@doptools/cli', {paths:['../../']}));
+
+
+    let isGlobal = globalCliPath !== null && currentCliPath === Path.dirname(globalCliPath);
+    if (localCliPath === Path.dirname(globalCliPath)) {
+        isGlobal = false;
+    }
 
     if (forceGlobal == isGlobal) {
         execute(argv, isGlobal);
@@ -74,6 +124,7 @@ async function execute(argv, global) {
     }
 
     throw new Error("NYI: local cli trying to run globally");
+    */
 })(process.argv);
 
 

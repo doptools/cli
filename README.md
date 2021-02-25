@@ -29,6 +29,8 @@ USAGE
 # Commands
 <!-- commands -->
 * [`dops help [COMMAND]`](#dops-help-command)
+* [`dops init`](#dops-init)
+* [`dops plugins:_init`](#dops-plugins_init)
 * [`dops plugins:add PLUGIN`](#dops-pluginsadd-plugin)
 * [`dops plugins:list`](#dops-pluginslist)
 * [`dops plugins:remove PLUGIN`](#dops-pluginsremove-plugin)
@@ -55,6 +57,32 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.2/src/commands/help.ts)_
+
+## `dops init`
+
+Initialize Project
+
+```
+USAGE
+  $ dops init
+
+OPTIONS
+  -v, --verbose
+```
+
+_See code: [src/commands/init.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.7/src/commands/init.ts)_
+
+## `dops plugins:_init`
+
+```
+USAGE
+  $ dops plugins:_init
+
+OPTIONS
+  -v, --verbose
+```
+
+_See code: [src/commands/plugins/_init.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.7/src/commands/plugins/_init.ts)_
 
 ## `dops plugins:add PLUGIN`
 
