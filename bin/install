@@ -1,3 +1,5 @@
-#!/usr/bin/env ts-node
-import {initPlugins} from '../src/util/initPlugin';
-initPlugins();
+#!/usr/bin/env node
+try {
+    const initPlugins = require('../lib/util/initPlugin').initPlugins;
+    initPlugins();
+} catch { }
