@@ -130,8 +130,6 @@ async function installPluginSpec(pluginSpec: PJSON.PluginTypes.User) {
     const plugin = pluginSpec.url!;
     const pluginName = pluginSpec.name!;
     const installed = !!resolvePackage(pluginName, PATH_CLI);
-    console.log('plugin', plugin);
-    console.log('PATH_CLI', PATH_CLI);
 
     let code;
     if (code = Yarn.add(plugin, { cwd: PATH_CLI })) {

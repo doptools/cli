@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 try {
-    console.log(process.config);
     const initPlugins = require('../lib/util/initPlugin').initPlugins;
     initPlugins();
-    console.log('done');
 } catch { }
