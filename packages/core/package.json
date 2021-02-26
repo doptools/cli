@@ -9,7 +9,7 @@
     "dist"
   ],
   "author": "Dan Erdelt <erd@conceptual.ca>",
-  "repository": "doptools/cli",
+  "repository": "https://github.com/doptools/cli",
   "engines": {
     "node": ">=6.0.0"
   },
