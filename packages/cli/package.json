@@ -2,7 +2,7 @@
   "name": "@doptools/cli",
   "description": "build and deployment tools",
   "version": "0.0.0-dev.11",
-  "author": "Dan Erdelt @myrddraall",
+  "author": "Dan Erdelt",
   "bin": {
     "dops": "./bin/run"
   },
