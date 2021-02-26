@@ -6,6 +6,9 @@
   "bin": {
     "dops": "./bin/run"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "schematics": "./src/collection.json",
   "bugs": "https://github.com/doptools/cli/issues",
   "dependencies": {
