@@ -1,10 +1,10 @@
 {
   "name": "root",
   "private": true,
-  "version": "0.0.0-dev.11",
+  "version": "0.0.0-dev.12",
   "scripts": {
     "build": "lerna run build",
-    "publish": "lerna run build" 
+    "publish": "lerna run build"
   },
   "devDependencies": {
     "lerna": "^3.22.1"
