@@ -9,12 +9,12 @@
     "dist"
   ],
   "author": "Dan Erdelt <erd@conceptual.ca>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/doptools/tslib-cli-core.git"
-  },
+  "repository": "doptools/cli",
   "engines": {
     "node": ">=6.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
@@ -23,10 +23,8 @@
     "start": "tsc --module commonjs -w",
     "exec": "ts-node ./src/tslib-cli-core.ts"
   },
-  "bugs": {
-    "url": "https://github.com/doptools/tslib-cli-core/issues"
-  },
-  "homepage": "https://github.com/doptools/tslib-cli-core#readme",
+  "bugs": "https://github.com/doptools/cli/issues",
+  "homepage": "https://github.com/doptools/cli#readme",
   "devDependencies": {
     "@types/chalk": "^2.2.0",
     "@types/inquirer": "^7.3.1",
