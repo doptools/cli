@@ -67,7 +67,7 @@
     ],
     "hooks": {}
   },
-  "repository": "doptools/cli",
+  "repository": "https://github.com/doptools/cli",
   "scripts": {
     "preinstall": "./bin/install",
     "postpack": "rimraf oclif.manifest.json",
