@@ -29,9 +29,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ github.token }}
         run: |
           yarn global add lerna
-          lerna bootstrap
+          npx lerna bootstrap
 
       - name: Build
-        run: lerna run prepack
+        run: npx lerna run prepack
 
  
