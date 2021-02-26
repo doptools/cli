@@ -8,7 +8,7 @@
   "files": [
     "dist"
   ],
-  "author": "Dan Erdelt <erd@conceptual.ca>",
+  "author": "Dan Erdelt",
   "repository": "https://github.com/doptools/cli",
   "engines": {
     "node": ">=6.0.0"
