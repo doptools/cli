@@ -1,4 +1,4 @@
-import { CliCommand, CommandBase, Shell } from '@doptools/tslib-cli-core';
+import { CliCommand, CommandBase, Shell } from '@doptools/cli-core';
 import { existsSync } from 'fs';
 import Path from 'path';
 
