@@ -28,10 +28,11 @@ export abstract class SchematicsCommandBase extends CommandBase {
 
     public run(): PromiseLike<any> {
         const options = this.buildOptions();
-        const r = this.runRule((tree: Tree, context: SchematicContext) => {
+        const rule = (tree: Tree, context: SchematicContext) => {
             (this.fs as SchematicsSimpleFs).tree = tree;
             return this.execute(tree, context, options);
-        }, options);
+        };
+        const r = this.runRule(rule, options);
         (this.fs as SchematicsSimpleFs).tree = null;
         return r;
     }
