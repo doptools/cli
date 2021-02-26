@@ -1,4 +1,4 @@
-import { CliCommand, CommandBase, Shell } from '@doptools/tslib-cli-core';
+import { CliCommand, CommandBase, Shell } from '@doptools/cli-core';
 
 @CliCommand({
     description: "Run dops commands in the global context",

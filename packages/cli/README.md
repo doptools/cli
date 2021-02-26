@@ -15,7 +15,7 @@ $ npm install -g @doptools/cli
 $ dops COMMAND
 running command...
 $ dops (-v|--version|version)
-@doptools/cli/0.0.0-dev.11 linux-x64 node-v14.15.5
+@doptools/cli/0.0.0-dev.20 linux-x64 node-v14.15.5
 $ dops --help [COMMAND]
 USAGE
   $ dops COMMAND
@@ -43,7 +43,7 @@ OPTIONS
   -v, --verbose
 ```
 
-_See code: [src/commands/global.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.11/src/commands/global.ts)_
+_See code: [src/commands/global.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.20/src/commands/global.ts)_
 
 ## `dops help [COMMAND]`
 
@@ -75,7 +75,7 @@ OPTIONS
   -v, --verbose
 ```
 
-_See code: [src/commands/plugins/add.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.11/src/commands/plugins/add.ts)_
+_See code: [src/commands/plugins/add.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.20/src/commands/plugins/add.ts)_
 
 ## `dops plugins:list`
 
@@ -88,7 +88,7 @@ OPTIONS
   -v, --verbose
 ```
 
-_See code: [src/commands/plugins/list.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.11/src/commands/plugins/list.ts)_
+_See code: [src/commands/plugins/list.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.20/src/commands/plugins/list.ts)_
 
 ## `dops plugins:remove PLUGIN`
 
@@ -104,7 +104,7 @@ OPTIONS
   -v, --verbose
 ```
 
-_See code: [src/commands/plugins/remove.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.11/src/commands/plugins/remove.ts)_
+_See code: [src/commands/plugins/remove.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.20/src/commands/plugins/remove.ts)_
 
 ## `dops update [CHANNEL]`
 

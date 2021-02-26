@@ -1,4 +1,4 @@
-import { Argument, CliCommand, CommandBase } from '@doptools/tslib-cli-core';
+import { Argument, CliCommand, CommandBase } from '@doptools/cli-core';
 import { uninstallPlugin } from '../../util/plugins';
 
 @CliCommand({})
