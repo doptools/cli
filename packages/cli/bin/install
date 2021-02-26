@@ -1,5 +1,2 @@
 #!/usr/bin/env node
-try {
-    const initPlugins = require('../lib/util/initPlugin').initPlugins;
-    initPlugins();
-} catch { }
+try { require('../lib/bin/install').default(); } catch { }

@@ -28,7 +28,7 @@ function findUpPackagePath(path: string): string | null {
     }
 }
 
-export function initPlugins() {
+export default function initializePlugins() {
     let changed = false;
     try {
         const pkgSearchPath = Path.normalize(Path.join(process.cwd(), '..'));
