@@ -35,15 +35,12 @@ jobs:
       - name: Install
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
-        run: |
-          yarn global add lerna
-          npx lerna bootstrap 
+        run: yarn
 
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
-        run: |
-          npx lerna publish --no-git-reset --no-git-tag-version --no-commit-hooks --no-push --yes ${{ steps.version.outputs.full }}
+        run: yarn run publish ${{ steps.version.outputs.full }}
 
       - name: Create Release
         id: create_release

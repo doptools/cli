@@ -27,11 +27,9 @@ jobs:
       - name: Install
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
-        run: |
-          yarn global add lerna
-          npx lerna bootstrap 
+        run: yarn
 
       - name: Build
-        run: npx lerna run prepack
+        run: yarn build
 
  
