@@ -44,7 +44,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ github.token }}
         run: |
           npx lerna version --no-git-tag-version --no-commit-hooks --no-push --yes ${{ steps.version.outputs.full }}
-          npx lerna publish --no-git-reset
+          npx lerna publish --no-git-reset --no-git-tag-version --no-commit-hooks --no-push --yes
 
       - name: Create Release
         id: create_release
