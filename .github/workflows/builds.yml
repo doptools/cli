@@ -27,12 +27,11 @@ jobs:
       - name: Install
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
-        run: yarn
+        run: |
+          yarn global add lerna
+          npx lerna bootstrap 
 
       - name: Build
-        run: |
-          yarn run prepack
-          ls -al ./lib
+        run: npx lerna run prepack
 
-    #  - name: Run
-    #    run: yarn run dryrun test-env --no-interactive
+ 
