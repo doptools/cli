@@ -1,4 +1,4 @@
-import { BooleanFlag, CliCommand, CommandBase } from '@doptools/tslib-cli-core';
+import { BooleanFlag, CliCommand, CommandBase } from '@doptools/cli-core';
 import { IPlugin, PJSON } from '@oclif/config';
 import cli from 'cli-ux';
 import { readCliPackageJson } from '../../util/plugins';

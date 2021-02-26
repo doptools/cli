@@ -1,8 +1,8 @@
 {
   "name": "@doptools/cli",
   "description": "build and deployment tools",
-  "version": "0.0.0-dev.11",
-  "author": "Dan Erdelt @myrddraall",
+  "version": "0.0.0-dev.20",
+  "author": "Dan Erdelt",
   "bin": {
     "dops": "./bin/run"
   },
@@ -13,7 +13,7 @@
   "bugs": "https://github.com/doptools/cli/issues",
   "dependencies": {
     "@angular-devkit/schematics": "^11.2.1",
-    "@doptools/tslib-cli-core": "^0.0.0-dev.7",
+    "@doptools/cli-core": "^0.0.0-dev.20",
     "@oclif/command": "^1.8.0",
     "@oclif/config": "^1.17.0",
     "@oclif/plugin-help": "^3.2.2",
@@ -67,7 +67,7 @@
     ],
     "hooks": {}
   },
-  "repository": "doptools/cli",
+  "repository": "https://github.com/doptools/cli",
   "scripts": {
     "preinstall": "./bin/install",
     "postpack": "rimraf oclif.manifest.json",

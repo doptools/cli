@@ -37,6 +37,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ github.token }}
         run: yarn
 
+      - name: Build
+        run: yarn build
+        
       - name: Publish
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}

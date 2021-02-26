@@ -1,4 +1,4 @@
-import { Yarn } from '@doptools/tslib-cli-core';
+import { Yarn } from '@doptools/cli-core';
 import { IConfig, PJSON } from '@oclif/config';
 import { Octokit } from '@octokit/rest';
 import { realpathSync } from 'fs';
