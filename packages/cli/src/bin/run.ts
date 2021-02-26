@@ -1,8 +1,7 @@
-import type { PackageJson } from "type-fest";
-
-import resolvePackagePath from 'resolve-package-path';
 import chalk from 'chalk';
 import Path from 'path';
+import resolvePackagePath from 'resolve-package-path';
+
 
 //console.log(process.argv);
 

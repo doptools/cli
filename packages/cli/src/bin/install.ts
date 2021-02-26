@@ -1,5 +1,6 @@
 
-// Cannot use runtime dependancies here. this will run before the package manager has installed them
+// Cannot use runtime dependancies here as this will run before the package manager has installed them.
+// types and node default modules are ok
 
 import type { PJSON } from '@oclif/config';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
@@ -42,7 +43,7 @@ export default function initializePlugins() {
                 const cliPlugins: Array<string | PJSON.PluginTypes.User | PJSON.PluginTypes.Link> = cliPkg.oclif.plugins = cliPkg.oclif.plugins ?? [];
                 const cliDeps = cliPkg.dependencies = cliPkg.dependencies ?? {};
 
-                var plugins: PJSON.PluginTypes.User[] = pkg.dops.plugins;
+                const plugins: PJSON.PluginTypes.User[] = pkg.dops.plugins;
                 plugins.forEach(async plugin => {
                     const installedPlugin = cliPlugins.find(p => typeof p === 'string' ? p === plugin.name : p.name == plugin.name);
                     if (!installedPlugin) {
