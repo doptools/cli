@@ -9,7 +9,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "schematics": "./src/collection.json",
   "bugs": "https://github.com/doptools/cli/issues",
   "dependencies": {
     "@angular-devkit/schematics": "^11.2.1",
@@ -64,8 +63,7 @@
       "@oclif/plugin-help",
       "@oclif/plugin-not-found",
       "@oclif/plugin-update"
-    ],
-    "hooks": {}
+    ]
   },
   "repository": "https://github.com/doptools/cli",
   "scripts": {

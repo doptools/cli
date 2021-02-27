@@ -10,12 +10,12 @@
  * found in the LICENSE file at https://angular.io/license
  */
 
+import { logging, schema } from '@angular-devkit/core';
+import { createConsoleLogger } from '@angular-devkit/core/node';
+import { Rule, UnsuccessfulWorkflowExecution } from '@angular-devkit/schematics';
 import { NodeWorkflow } from '@angular-devkit/schematics/tools';
 import chalk from 'chalk';
-import { ProcessOutput, createConsoleLogger } from '@angular-devkit/core/node';
-import { logging, schema } from '@angular-devkit/core';
 import * as inquirer from 'inquirer';
-import { Rule, UnsuccessfulWorkflowExecution } from '@angular-devkit/schematics';
 import path from 'path';
 const colors = new chalk.Instance({ level: 3 });
 
