@@ -19,9 +19,9 @@
   "scripts": {
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist",
-    "build": "tsc --module commonjs",
-    "start": "tsc --module commonjs -w",
-    "exec": "ts-node ./src/tslib-cli-core.ts"
+    "build": "tsc -p tsconfig.json",
+    "start": "tsc -p tsconfig.json -w",
+    "exec": "ts-node ./src/core.ts"
   },
   "bugs": "https://github.com/doptools/cli/issues",
   "homepage": "https://github.com/doptools/cli#readme",
@@ -51,6 +51,7 @@
     "inquirer": "^7.3.3",
     "jsonc": "^2.0.0",
     "npm-package-arg": "^8.1.1",
+    "resolve-package-path": "^3.1.0",
     "rxjs": "^6.6.3",
     "string-argv": "^0.3.1",
     "tslib": "^2.1.0",

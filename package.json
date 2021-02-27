@@ -2,10 +2,14 @@
   "name": "root",
   "private": true,
   "version": "0.0.0-dev.24",
+  "workspaces": [
+    "packages/*",
+    "plugins/*"
+  ],
   "scripts": {
     "publish": "lerna publish --no-git-tag-version --no-commit-hooks --no-push --force-publish --yes --graph-type all ",
     "postinstall": "lerna bootstrap",
-    "build": "lerna exec yarn build"
+    "build": "lerna run build"
   },
   "devDependencies": {
     "lerna": "^3.22.1"

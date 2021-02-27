@@ -1,0 +1,9 @@
+{
+    "name": "@doptools/plugin-workspace",
+    "dops-plugin": {
+        "type": "global"
+    },
+    "dependencies": {
+        "@oclif/config": "^1.17.0"
+    }
+}

@@ -31,7 +31,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
-    "@types/node": "14",
+    "@types/node": "^14.14.31",
     "@types/npm-package-arg": "^6.1.0",
     "@types/semver": "^7.3.4",
     "eslint": "^5.13",
@@ -63,17 +63,21 @@
       "@oclif/plugin-help",
       "@oclif/plugin-not-found",
       "@oclif/plugin-update"
-    ]
+    ],
+    "hooks": {
+      "init": "./lib/hooks/init/filter-commands"
+    }
   },
   "repository": "https://github.com/doptools/cli",
   "scripts": {
     "preinstall": "./bin/install",
     "postpack": "rimraf oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
-    "prepack": "rimraf lib && tsc -b && oclif-dev manifest && oclif-dev readme",
+    "prepack": "rimraf lib && yarn run build && oclif-dev manifest && oclif-dev readme",
     "test": "echo NO TESTS",
     "version": "oclif-dev readme && git add README.md",
-    "build": "yarn run prepack"
+    "build": "tsc -p tsconfig.json",
+    "start": "tsc -b -w"
   },
   "types": "lib/index.d.ts"
 }
