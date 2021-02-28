@@ -11,8 +11,7 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "declaration": true,
-    "importHelpers": true,
-    "preserveSymlinks": true,
+  
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUnusedLocals": false,

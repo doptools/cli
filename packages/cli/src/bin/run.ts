@@ -16,7 +16,7 @@ function spawnContext(bin: string, argv: string[]) {
 async function execute(argv: string[]) {
     console.info(chalk.gray(`Running context: ${process.env.DOPS_CLI__CONTEXT}`));
     try {
-        await run();
+        await run(argv);
         await flush();
     } catch (e) {
         if (e.code !== 'EEXIT') {

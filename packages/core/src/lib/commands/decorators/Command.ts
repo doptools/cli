@@ -1,10 +1,20 @@
+import { CliContext } from './../../cli/CliContext';
 import { Command, flags } from '@oclif/command';
 import { AlphabetLowercase, AlphabetUppercase } from '@oclif/parser/lib/alphabet';
 import { Default, IBooleanFlag, IFlagBase, IOptionFlag } from '@oclif/parser/lib/flags';
 import { Class } from 'type-fest';
-
+import multimatch from 'multimatch';
 
 const propertyKeyField = Symbol.for('hiden property to store propKey');
+
+
+
+export enum CommandContext {
+    Any = '*',
+    GLOBAL = 'global',
+    WORKSPACE = 'workspace',
+    PROJECT = 'project',
+}
 
 export interface ICliCommandDescription {
     id?: string;
@@ -13,6 +23,8 @@ export interface ICliCommandDescription {
     description?: string;
     usage?: string | string[];
     examples?: string[];
+    cliContext?: string | string[];
+    disabled?: (cliContext: CliContext) => boolean;
 }
 
 type HasPropertyKeyField = { [propertyKeyField]: string | symbol };
@@ -61,6 +73,9 @@ export function CliCommand(desc: ICliCommandDescription): ClassDecorator {
         const flags = Object.fromEntries(keys.flag.entries());
 
         const Base = target as Class<Command & { run: () => PromiseLike<any> }>;
+
+        desc.cliContext ??= CommandContext.Any;
+
         class Cmd extends Base {
             public static args = args;
             public static flags = flags;
@@ -70,6 +85,8 @@ export function CliCommand(desc: ICliCommandDescription): ClassDecorator {
             public static hidden = desc.hidden;
             public static id = desc.id;
             public static usage = desc.usage;
+            public static cliContext = desc.cliContext;
+            public static disabled = desc.disabled;
 
             constructor(...arg: any[]) {
                 super(...arg);

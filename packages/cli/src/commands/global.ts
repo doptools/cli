@@ -2,10 +2,8 @@ import { CliCommand, CommandBase, Shell } from '@doptools/cli-core';
 
 @CliCommand({
     description: "Run dops commands in the global context",
-    hidden: process.env.GLOBAL_CLI === 'true'
+    cliContext: '!global'
 })
-export default class InitProjectCommand extends CommandBase {
-    async run(): Promise<any> {
-        Shell.exec(`yarn`);
-    }
+export default class GlobalContextDummyCommand extends CommandBase {
+    async run(): Promise<any> {}
 }

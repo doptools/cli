@@ -23,6 +23,7 @@
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
     "jsonc": "^2.0.0",
+    "multimatch": "^5.0.0",
     "npm-package-arg": "^8.1.1",
     "resolve-package-path": "^3.1.0",
     "type-fest": "^0.21.1"
@@ -59,7 +60,9 @@
       "@oclif/plugin-not-found",
       "@oclif/plugin-update"
     ],
-    "hooks": {}
+    "hooks": {
+      "init": "./lib/hooks/init/filter-commands"
+    }
   },
   "repository": "https://github.com/doptools/cli",
   "scripts": {
