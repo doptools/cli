@@ -57,8 +57,7 @@
     "bin": "dops",
     "plugins": [
       "@oclif/plugin-help",
-      "@oclif/plugin-not-found",
-      "@oclif/plugin-update"
+      "@oclif/plugin-not-found"
     ],
     "hooks": {
       "init": "./lib/hooks/init/filter-commands"
@@ -66,6 +65,7 @@
   },
   "repository": "https://github.com/doptools/cli",
   "scripts": {
+    "clean": "rimraf lib",
     "preinstall": "./bin/install",
     "postpack": "rimraf oclif.manifest.json",
     "posttest": "eslint . --ext .ts --config .eslintrc",
