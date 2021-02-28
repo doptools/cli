@@ -1,5 +1,6 @@
 {
     "name": "@doptools/plugin-workspace",
+    "version": "0.0.0",
     "dops-plugin": {
         "type": "global"
     },
