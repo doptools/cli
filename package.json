@@ -9,7 +9,8 @@
   "scripts": {
     "publish": "lerna publish --no-git-tag-version --no-commit-hooks --no-push --force-publish --yes --graph-type all ",
     "postinstall": "lerna bootstrap",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "start": "lerna run --stream --parallel start"
   },
   "devDependencies": {
     "lerna": "^3.22.1"

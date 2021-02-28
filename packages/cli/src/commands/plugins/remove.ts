@@ -1,5 +1,5 @@
 import { Argument, CliCommand, CommandBase } from '@doptools/cli-core';
-import { uninstallPlugin } from '../../util/plugins';
+import { uninstallPlugin } from '../../util/plugin';
 
 @CliCommand({})
 export default class PluginRemoveCommand extends CommandBase {

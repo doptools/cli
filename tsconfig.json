@@ -4,6 +4,8 @@
     "target": "ES2019",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
     "preserveConstEnums": true,
     "strict": true,
     "strictNullChecks": true,
@@ -19,12 +21,7 @@
       "./node_modules/@types"
     ],
     "paths": {
-      "rxjs": [
-        "./node_modules/rxjs"
-      ],
-      "rxjs/*": [
-        "./node_modules/rxjs/*"
-      ]
+      
     }
   }
 }

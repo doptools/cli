@@ -32,9 +32,9 @@ interface IPackageSpec {
 }
 
 export class CliContext {
-    private static _instance?: Promise<CliContext | null>;
+    private static _instance?: Promise<CliContext>;
 
-    public static get instance(): Promise<CliContext | null> {
+    public static get instance(): Promise<CliContext> {
         if (!this._instance) {
             this._instance = this.get();
         }
@@ -42,7 +42,7 @@ export class CliContext {
 
     }
 
-    public static async get(fromPath: string = process.cwd(), argv: string[] = process.argv): Promise<CliContext | null> {
+    public static async get(fromPath: string = process.cwd(), argv: string[] = process.argv): Promise<CliContext> {
         const ws = new CliContext(fromPath, argv);
         const cwdPackage = findUpPackagePath(fromPath);
         if (cwdPackage !== null) {

@@ -5,7 +5,7 @@ import { realpathSync } from 'fs';
 import http from 'http';
 import { jsonc } from 'jsonc';
 import packageArgs from 'npm-package-arg';
-import Path from 'path';
+import * as Path from 'path';
 import resolvePackage, { findUpPackagePath } from 'resolve-package-path';
 import { PackageJson } from 'type-fest';
 

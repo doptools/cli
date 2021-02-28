@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-require('../lib/bin/run').default(process.argv).then(_ => { });
+require('../lib/bin/run').default(process.argv).then(_ =>{});
