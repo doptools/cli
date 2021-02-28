@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2019",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "preserveConstEnums": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "declaration": true,
+    "importHelpers": true,
+    "preserveSymlinks": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "paths": {
+      
+    }
+  }
+}

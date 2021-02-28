@@ -1,0 +1,31 @@
+Arguments: 
+  /usr/local/share/nvm/versions/node/v14.15.5/bin/node /usr/local/share/nvm/versions/node/v14.15.5/bin/yarn
+
+PATH: 
+  /home/vscode/.yarn/bin:/home/vscode/.vscode-server/bin/622cb03f7e070a9670c94bae1a45d78d7181fbd4/bin:/usr/local/share/nvm/versions/node/v14.15.5/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/vscode/.local/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.15.5
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /home/vscode/devcontainer-generators/projects/cli/plugins/plugin-workspace/package.json: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at /usr/local/share/nvm/versions/node/v14.15.5/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/usr/local/share/nvm/versions/node/v14.15.5/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /usr/local/share/nvm/versions/node/v14.15.5/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

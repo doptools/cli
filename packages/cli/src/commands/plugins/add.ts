@@ -1,5 +1,5 @@
 import { Argument, CliCommand, CommandBase } from '@doptools/cli-core';
-import { installPlugin } from '../../util/plugins';
+import { installPlugin } from '../../util/plugin';
 
 @CliCommand({})
 export default class PluginAddCommand extends CommandBase {

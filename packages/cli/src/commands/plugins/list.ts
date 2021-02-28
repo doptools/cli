@@ -1,7 +1,7 @@
 import { BooleanFlag, CliCommand, CommandBase } from '@doptools/cli-core';
 import { IPlugin, PJSON } from '@oclif/config';
 import cli from 'cli-ux';
-import { readCliPackageJson } from '../../util/plugins';
+import { readCliPackageJson } from '../../util/plugin';
 
 
 function getPluginType(cliPkg: PJSON.User, plugin: IPlugin): 'unknown' | 'core' | 'user' | 'link' | 'main' {
@@ -42,6 +42,4 @@ export default class PluginsListCommand extends CommandBase {
             version: {}
         });
     }
-
-
 }

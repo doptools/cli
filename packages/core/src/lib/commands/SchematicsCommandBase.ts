@@ -30,7 +30,7 @@ export abstract class SchematicsCommandBase extends CommandBase {
         const options = this.buildOptions();
         const rule = (tree: Tree, context: SchematicContext) => {
             (this.fs as SchematicsSimpleFs).tree = tree;
-            return this.execute(tree, context, options);
+            return this.execute(tree, context, options) as Rule;
         };
         const r = this.runRule(rule, options);
         (this.fs as SchematicsSimpleFs).tree = null;
