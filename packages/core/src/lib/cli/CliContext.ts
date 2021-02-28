@@ -84,9 +84,16 @@ export class CliContext {
         return ContextLevel[this.contextType] === ContextLevel[this.targetContextType];
     }
 
+    public get hasWorkspace(): boolean {
+        return this._packages.findIndex(p => +PackageLevel[p.type] === +ContextLevel.workspace) !== -1;
+    }
+    public get hasProject(): boolean {
+        return this._packages.findIndex(p => +PackageLevel[p.type] === +ContextLevel.project) !== -1;
+    }
+
     public get targetBinPath(): string | null {
         const type = this.targetContextType;
-        if(type === 'global'){
+        if (type === 'global') {
             return null;
         }
         const p = this._packages.find(p => +PackageLevel[p.type] === +ContextLevel[type])
