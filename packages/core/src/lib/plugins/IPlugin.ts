@@ -1,5 +1,8 @@
 
 
+
+
+/*
 export enum PluginType {
     MAIN = 'main',
     CORE = 'core',
@@ -18,3 +21,6 @@ export interface IPLugin {
     name: string;
     type: PluginType;
 }
+
+
+*/
