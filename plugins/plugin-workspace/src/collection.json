@@ -1,0 +1,11 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "schematics": {
+    "workspace": {
+      "description": "Generates a base project",
+      "hidden": true,
+      "factory": "./schematics/workspace",
+      "schema": "./schematics/workspace/schema.json"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "WorkspaceOptions",
+    "title": "Workspace Options",
+    "type": "object",
+    "properties": {
+      "name": {
+        "description": "The name of the project",
+        "type": "string",
+        "$default": {
+          "$source": "argv",
+          "index": 0
+        }
+      },
+      "description": {
+        "type": "string",
+        "description": "A description of the project",
+        "default": ""
+      },
+      "repository": {
+        "type": "string",
+        "description": "The repository for the project",
+        "default": ""
+      },
+      "author": {
+        "type": "string",
+        "description": "Author",
+        "default": ""
+      },
+      "license": {
+        "type": "string",
+        "description": "License",
+        "default": "UNLICENCED"
+      }
+    },
+    "required": ["name"]
+  }
+  

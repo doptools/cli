@@ -6,7 +6,7 @@ import { handle } from '@oclif/errors';
 import chalk from 'chalk';
 import Path from 'path';
 import * as Config from '@oclif/config'
-//Config.Config
+
 
 function spawnContext(bin: string, argv: string[]) {
     console.info(chalk.gray(`Switching to ${chalk.blueBright(process.env.DOPS_CLI__CONTEXT_TARGET)} context...`));

@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig",
+  "compilerOptions": {},
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "src/*/files*.*/"
+  ]
+}
