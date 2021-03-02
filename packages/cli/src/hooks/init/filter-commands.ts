@@ -1,6 +1,6 @@
 import { CliContext, CommandContext, ICliCommandDescription } from '@doptools/cli-core';
 import { Hook } from '@oclif/config';
-import * as mm from  'multimatch';
+import * as mm from 'multimatch';
 const multimatch: typeof mm.default = mm.default as any ?? mm as any;
 
 const hook: Hook<'init'> = async function (options) {
@@ -15,7 +15,6 @@ const hook: Hook<'init'> = async function (options) {
       cmdClass.cliContext ?? CommandContext.Any,
       { nocase: true }
     );
-
     return !m.length;
   }).forEach(cmd => {
     cmd.hidden = true;

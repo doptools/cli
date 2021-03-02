@@ -33,8 +33,11 @@ export default async function main(argv: string[]) {
     process.env.DOPS_CLI__CONTEXT = cliContext.contextType;
     process.env.DOPS_CLI__CONTEXT_TARGET = cliContext.targetContextType;
     if (cliContext.isCorrectContext) {
-        const config = await Config.load(__filename);
-        await (await PluginManager.create(config)).syncPlugins();
+        let config = await Config.load(__filename);
+        const changed = await (await PluginManager.create(config)).syncPlugins();
+        if(changed){
+            config = await Config.load(__filename);
+        }
         await execute(argv.slice(2), config);
     } else {
         if (cliContext.targetBinPath) {

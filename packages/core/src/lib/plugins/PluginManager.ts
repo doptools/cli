@@ -48,7 +48,6 @@ function defer<T>(): Defered<T> {
     return ret as Defered<T>;
 }
 
-
 export class PluginManager {
     private static _instance: Defered<PluginManager> = defer();
 
@@ -111,7 +110,6 @@ export class PluginManager {
         });
     }
 
-
     public async addPlugin(plugin: string) {
         if (this.context.contextType === 'global') {
             return this.addGlobalPlugin(plugin);
@@ -149,7 +147,7 @@ export class PluginManager {
     }
 
 
-    public async syncPlugins() {
+    public async syncPlugins(): Promise<boolean> {
         if (this.context.contextType === 'global') {
             return this.syncGlobalPlugins();
         }
@@ -169,9 +167,59 @@ export class PluginManager {
                 }
             }
             await jsonc.write(join(await this.context.binPath, 'package.json'), binPkg);
+            return true;
         }
+        return false
     }
 
+    private async syncGlobalPlugins(): Promise<boolean> {
+        const configPath = join(this.config.configDir, 'plugins.json');
+        let configPkg: IDopsConfig = {
+            dops: {
+                plugins: {}
+            }
+        };
+        if (existsSync(configPath)) {
+            configPkg = await jsonc.read(configPath) as IDopsConfig;
+            configPkg.dops ??= { plugins: {} };
+            configPkg.dops.plugins ??= {};
+        }
+        const pkgPath = join(this.config.root, 'package.json');
+        const pkg = await jsonc.read(pkgPath) as PJSON.User;
+        pkg.oclif.plugins ??= [];
+
+        const installPlugins = Object.entries(configPkg.dops.plugins).map(_ => ({
+            name: _[0],
+            tag: _[1]
+        }));
+        const installedPlugins = pkg.oclif.plugins.filter(p => typeof p === 'string' ? false : p.type === 'user') as PJSON.PluginTypes.User[];
+
+        const addedPlugins = installPlugins.filter(p => !installedPlugins.find(_ => _.name === p.name));
+        const removedPlugins = installedPlugins.filter(p => !configPkg.dops.plugins[p.name]);
+
+        if (addedPlugins.length || removedPlugins.length) {
+            pkg.oclif.plugins = [
+                ...pkg.oclif.plugins.filter(p => typeof p === 'string' ? true : p.type !== 'user'),
+                ...installPlugins.map(p => ({
+                    type: 'user',
+                    name: p.name,
+                    tag: p.tag
+                } as PJSON.PluginTypes.User))
+            ];
+            await jsonc.write(pkgPath, pkg);
+
+            if (removedPlugins.length) {
+                const rm = `"${removedPlugins.map(_ => _.name).join('" "')}"`;
+                Yarn.remove(rm, { cwd: this.config.root });
+            }
+            if (addedPlugins.length) {
+                const add = `"${addedPlugins.map(_ => `${_.name}${_.tag ? `@${_.tag}` : ''}`).join('" "')}"`;
+                Yarn.add(add, { dev: true, cwd: this.config.root });
+            }
+            return true;
+        }
+        return false;
+    }
 
     private async savePluginConfig(path: string, pluginName: string, version?: string | null) {
         let pkg = {} as PackageJson & IDopsConfig;
@@ -201,14 +249,4 @@ export class PluginManager {
                 ...ref.dependencies ?? {}
             }[pluginName];
     }
-
-    private async syncGlobalPlugins() {
-
-    }
-
-
-
-
-
-
 }
