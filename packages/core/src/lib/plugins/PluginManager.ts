@@ -24,6 +24,9 @@ export class PluginManager {
 
 
     public async listPlugins(config: IConfig) {
+        if (this.context.contextType === 'global') {
+            return this.listGlobalPlugins(config);
+        }
         const binPkg = await jsonc.read(join(this.context.binPath!, 'package.json')) as PJSON.User;
         return config.plugins.map(p => {
             return {
@@ -106,5 +109,9 @@ export class PluginManager {
 
     private async removeGlobalPlugin(plugin: string) {
         const info = NodeUtil.packageInfo(plugin);
+    }
+
+    public async listGlobalPlugins(config: IConfig) {
+        return [];
     }
 }
