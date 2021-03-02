@@ -3,6 +3,8 @@ import minimist, { ParsedArgs } from 'minimist';
 import { dirname, join, relative, resolve } from "path";
 import resolvePackagePath, { findUpPackagePath } from "resolve-package-path";
 import { PackageJson } from "type-fest";
+import { IDopsConfig } from "../config/IDopsConfig";
+import { NodeUtil } from "../util/NodeUtil";
 
 type ContextTypes = 'global' | 'workspace' | 'project';
 type PackageTypes = ContextTypes | 'yarnws' | 'package';
@@ -80,15 +82,47 @@ export class CliContext {
         const m = this._packages[0];
         return m?.type ? ContextLevel[PackageLevel[m.type]] as ContextTypes : 'global';
     }
+
     public get isCorrectContext(): boolean {
         return ContextLevel[this.contextType] === ContextLevel[this.targetContextType];
     }
 
-    public get hasWorkspace(): boolean {
-        return this._packages.findIndex(p => +PackageLevel[p.type] === +ContextLevel.workspace) !== -1;
+    public get workspaceSpec(): IPackageSpec | undefined {
+        return this._packages.find(p => +PackageLevel[p.type] === +ContextLevel.workspace);
     }
+
+    public get projectSpec(): IPackageSpec | undefined {
+        return this._packages.find(p => +PackageLevel[p.type] === +ContextLevel.project);
+    }
+
+    public get hasWorkspace(): boolean {
+        return !!this.workspaceSpec;
+    }
+
     public get hasProject(): boolean {
-        return this._packages.findIndex(p => +PackageLevel[p.type] === +ContextLevel.project) !== -1;
+        return !!this.projectSpec;
+    }
+
+    public get workspacePath(): string | undefined {
+        return this.workspaceSpec?.path;
+    }
+
+    public get projectPath(): string | undefined {
+        return this.projectSpec?.path;
+    }
+
+    public get contextPackageJsonPath(): string | undefined {
+        return this._packages.length ? this._packages[0].path : undefined;
+    }
+    public get contextPath(): string | undefined {
+        return this._packages.length ? dirname(this._packages[0].path) : undefined;
+    }
+
+    public get contextPackageJson(): Promise<PackageJson & IDopsConfig> | null {
+        if(this.contextPackageJsonPath){
+            return jsonc.read(this.contextPackageJsonPath);
+        }
+        return null;
     }
 
     public get targetBinPath(): string | null {
@@ -99,6 +133,10 @@ export class CliContext {
         const p = this._packages.find(p => +PackageLevel[p.type] === +ContextLevel[type])
         return p?.cliPath ?? null;
 
+    }
+
+    public get binPath(): string | null {
+       return this._binPath;
     }
 
     public isValidContext(context: ContextTypes): boolean {

@@ -1,7 +1,6 @@
-import { BooleanFlag, CliCommand, CommandBase } from '@doptools/cli-core';
+import { BooleanFlag, CliCommand, CommandBase, PluginManager } from '@doptools/cli-core';
 import { IPlugin, PJSON } from '@oclif/config';
 import cli from 'cli-ux';
-import { readCliPackageJson } from '../../util/plugin';
 
 
 function getPluginType(cliPkg: PJSON.User, plugin: IPlugin): 'unknown' | 'core' | 'user' | 'link' | 'main' {
@@ -20,26 +19,23 @@ export default class PluginsListCommand extends CommandBase {
 
     @BooleanFlag()
     public all?: boolean = false;
+    @BooleanFlag()
+    public long?: boolean = false;
 
     async run(): Promise<any> {
-        const cliPkg = await readCliPackageJson() as PJSON.User;
 
-        let plugins = this.config.plugins
-            .map(plugin => ({
-                name: plugin.name,
-                type: getPluginType(cliPkg, plugin),
-                valid: plugin.valid,
-                version: plugin.version
-            }))
+        const pm = await PluginManager.forContext();
+        const plugins = (await pm.listPlugins(this.config)).filter(p => this.all ? true : p.type === 'user');
 
-        if (!this.all) {
-            plugins = plugins.filter(_ => _.type !== 'main' && _.type !== 'core');
+        if (!this.long) {
+            this.log(plugins.map(_ => `${_.name}@${_.version}`).join(' '));
+        } else {
+            cli.table(plugins, {
+                name: {},
+                type: { minWidth: 8 },
+                version: {},
+                valid: {},
+            });
         }
-
-        cli.table(plugins, {
-            name: {},
-            type: { minWidth: 8 },
-            version: {}
-        });
     }
 }

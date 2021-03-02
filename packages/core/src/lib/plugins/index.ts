@@ -1,1 +1,1 @@
-export * from './IPlugin';
+export * from './PluginManager';

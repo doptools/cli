@@ -3,6 +3,9 @@ import { Hook } from '@oclif/config';
 import * as mm from 'multimatch';
 const multimatch: typeof mm.default = mm as any;
 
+console.log(mm);
+console.log(mm);
+
 const hook: Hook<'init'> = async function (options) {
   const context = await CliContext.instance;
   options.config.commands.filter(cmd => {

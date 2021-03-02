@@ -1,9 +1,8 @@
-import { CliContext } from './../../cli/CliContext';
 import { Command, flags } from '@oclif/command';
 import { AlphabetLowercase, AlphabetUppercase } from '@oclif/parser/lib/alphabet';
 import { Default, IBooleanFlag, IFlagBase, IOptionFlag } from '@oclif/parser/lib/flags';
 import { Class } from 'type-fest';
-import multimatch from 'multimatch';
+import { CliContext } from './../../cli/CliContext';
 
 const propertyKeyField = Symbol.for('hiden property to store propKey');
 
