@@ -21,9 +21,9 @@
         "commands": "./dist/commands",
         "bin": "dops",
         "devPlugins": [
-          "@oclif/plugin-help"
+            "@oclif/plugin-help"
         ]
-      },
+    },
     "files": [
         "/dist",
         "/npm-shrinkwrap.json",
@@ -33,10 +33,13 @@
     "dependencies": {
         "@angular-devkit/core": "^11.2.2",
         "@angular-devkit/schematics": "^11.2.2",
-        "@oclif/plugin-legacy": "^1.2.0"
+        "@oclif/command": "^1.8.0",
+        "@oclif/config": "^1.17.0"
     },
     "devDependencies": {
         "@angular-devkit/schematics-cli": "^0.1102.2",
+        "@oclif/dev-cli": "1.26.0",
+        "@oclif/plugin-help": "3.2.2",
         "@types/gulp": "^4.0.8",
         "@types/node": "^14.14.31",
         "gulp": "^4.0.2",
