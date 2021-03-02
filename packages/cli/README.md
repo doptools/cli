@@ -105,15 +105,3 @@ OPTIONS
 ```
 
 _See code: [src/commands/plugins/remove.ts](https://github.com/doptools/cli/blob/v0.0.0-dev.20/src/commands/plugins/remove.ts)_
-
-## `dops update [CHANNEL]`
-
-update the dops CLI
-
-```
-USAGE
-  $ dops update [CHANNEL]
-```
-
-_See code: [@oclif/plugin-update](https://github.com/oclif/plugin-update/blob/v1.3.10/src/commands/update.ts)_
-<!-- commandsstop -->

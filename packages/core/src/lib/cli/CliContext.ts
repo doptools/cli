@@ -4,7 +4,6 @@ import { dirname, join, relative, resolve } from "path";
 import resolvePackagePath, { findUpPackagePath } from "resolve-package-path";
 import { PackageJson } from "type-fest";
 import { IDopsConfig } from "../config/IDopsConfig";
-import { NodeUtil } from "../util/NodeUtil";
 
 type ContextTypes = 'global' | 'workspace' | 'project';
 type PackageTypes = ContextTypes | 'yarnws' | 'package';

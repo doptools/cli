@@ -8,8 +8,7 @@ import Path from 'path';
 import cli from 'cli-ux';
 
 function spawnContext(bin: string, argv: string[]) {
-    console.info(chalk.gray(`Switching context: ${process.env.DOPS_CLI__CONTEXT_TARGET}`));
-    //cli.action.start(chalk.gray(`Switching to ${process.env.DOPS_CLI__CONTEXT_TARGET} context`));
+    console.info(chalk.gray(`Switching to ${chalk.blueBright(process.env.DOPS_CLI__CONTEXT_TARGET)} context...`));
     const children = require('child_process');
     const result = children.spawnSync(bin, argv, { stdio: 'inherit', cwd: process.cwd() });
     process.exit(result.status);
@@ -33,9 +32,7 @@ export default async function main(argv: string[]) {
     process.env.DOPS_CLI__CONTEXT = cliContext.contextType;
     process.env.DOPS_CLI__CONTEXT_TARGET = cliContext.targetContextType;
     if (cliContext.isCorrectContext) {
-        cli.action.start(chalk.gray('Sync plugins'));
         await (await PluginManager.forContext()).syncPlugins();
-        cli.action.stop();
         await execute(argv.slice(2));
     } else {
         if (cliContext.targetBinPath) {

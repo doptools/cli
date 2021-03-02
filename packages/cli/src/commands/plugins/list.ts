@@ -2,18 +2,6 @@ import { BooleanFlag, CliCommand, CommandBase, PluginManager } from '@doptools/c
 import { IPlugin, PJSON } from '@oclif/config';
 import cli from 'cli-ux';
 
-
-function getPluginType(cliPkg: PJSON.User, plugin: IPlugin): 'unknown' | 'core' | 'user' | 'link' | 'main' {
-    const pluginDef = cliPkg.oclif.plugins?.find(p => typeof p === 'string' ? p === plugin.name : p.name === plugin.name);
-    if (!pluginDef) {
-        return plugin.name === '@doptools/cli' ? 'main' : 'unknown';
-    }
-    if (typeof pluginDef === 'string') {
-        return 'core';
-    }
-    return pluginDef.type;
-}
-
 @CliCommand({})
 export default class PluginsListCommand extends CommandBase {
 
