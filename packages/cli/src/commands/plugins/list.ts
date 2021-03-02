@@ -1,7 +1,6 @@
 import { BooleanFlag, CliCommand, CommandBase, PluginManager } from '@doptools/cli-core';
 import { IPlugin, PJSON } from '@oclif/config';
 import cli from 'cli-ux';
-import { readCliPackageJson } from '../../util/plugin';
 
 
 function getPluginType(cliPkg: PJSON.User, plugin: IPlugin): 'unknown' | 'core' | 'user' | 'link' | 'main' {

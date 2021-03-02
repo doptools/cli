@@ -1,2 +1,0 @@
-#!/usr/bin/env node
-try { require('../lib/bin/install').default(); } catch { }
