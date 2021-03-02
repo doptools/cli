@@ -2,6 +2,9 @@
     "name": "@doptools/plugin-workspace",
     "version": "0.0.0",
     "schematics": "./src/collection.json",
+    "bugs": "https://github.com/doptools/cli/issues",
+    "homepage": "https://github.com/doptools/cli",
+    "repository": "https://github.com/doptools/cli",
     "scripts": {
         "clean": "rimraf .tmp/dist",
         "build": "run-s build:*",
@@ -14,6 +17,13 @@
         "start:schema": "gulp",
         "start:ts": "tsc -p tsconfig.plugin.json -w"
     },
+    "oclif": {
+        "commands": "./dist/commands",
+        "bin": "dops",
+        "devPlugins": [
+          "@oclif/plugin-help"
+        ]
+      },
     "files": [
         "/dist",
         "/npm-shrinkwrap.json",
