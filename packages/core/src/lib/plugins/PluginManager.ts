@@ -1,5 +1,6 @@
 
 import { IConfig, IPlugin, PJSON } from '@oclif/config';
+import { existsSync } from 'fs';
 import { jsonc } from 'jsonc';
 import { join } from 'path';
 import { PackageJson } from 'type-fest';
@@ -90,24 +91,24 @@ export class PluginManager {
 
     public async listGlobalPlugins() {
         const config = this.config;
-        function getType(plugin:IPlugin){
-            if(plugin.name === '@doptools/cli'){
+        function getType(plugin: IPlugin) {
+            if (plugin.name === '@doptools/cli') {
                 return 'main';
-            }else{
+            } else {
                 const cfg = config.pjson as PJSON.User;
                 return cfg.oclif.plugins
                     ?.filter(p => typeof p === 'string' ? plugin.name === p : plugin.name === p.name)
                     .map(p => typeof p === 'string' ? 'core' : p.type)[0];
             }
         }
-         return this.config.plugins.map(p => { 
+        return this.config.plugins.map(p => {
             return {
                 type: getType(p),
                 name: p.name,
                 version: p.version,
                 valid: p.valid
             };
-         });
+        });
     }
 
 
@@ -118,6 +119,16 @@ export class PluginManager {
         Yarn.add(plugin, { dev: true, cwd: this.context.contextPath });
         const info = NodeUtil.packageInfo(plugin);
         await this.savePluginConfig(this.context.contextPackageJsonPath!, info.name!);
+    }
+
+    private async addGlobalPlugin(plugin: string) {
+        const path = this.config.root;
+        Yarn.add(plugin, { dev: true, cwd: path });
+        const pkg = await jsonc.read(join(path, 'package.json')) as PackageJson & IDopsConfig;
+        const info = NodeUtil.packageInfo(plugin);
+        const ver = this.getPluginVersion(pkg, info.name!);
+        const configPath = join(this.config.configDir, 'plugins.json');
+        await this.savePluginConfig(configPath, info.name!, ver);
     }
 
     public async removePlugin(plugin: string) {
@@ -152,8 +163,13 @@ export class PluginManager {
         }
     }
 
+
     private async savePluginConfig(path: string, pluginName: string, version?: string | null) {
-        const pkg = await jsonc.read(path) as PackageJson & IDopsConfig;
+        console.log(path);
+        let pkg = {} as PackageJson & IDopsConfig;
+        if (existsSync(path)) {
+            pkg = await jsonc.read(path);
+        }
         const ref = { ...pkg };
         ref.devDependencies ??= {};
         ref.dependencies ??= {};
@@ -163,19 +179,26 @@ export class PluginManager {
         if (version === null) {
             delete pkg.dops.plugins[pluginName];
         } else {
-            version ??= ref.devDependencies[pluginName] ?? ref.dependencies[pluginName] ?? ref.peerDependencies[pluginName];
+            version = this.getPluginVersion(ref, pluginName, version);
             pkg.dops.plugins[pluginName] = version ?? 'latest';
         }
         await jsonc.write(path, pkg, { space: 4 });
+    }
+
+    private getPluginVersion(ref: PackageJson & IDopsConfig, pluginName: string, version?: string | null) {
+        return version ??
+            {
+                ...ref.peerDependencies ?? {},
+                ...ref.devDependencies ?? {},
+                ...ref.dependencies ?? {}
+            }[pluginName];
     }
 
     private async syncGlobalPlugins() {
 
     }
 
-    private async addGlobalPlugin(plugin: string) {
-        const info = NodeUtil.packageInfo(plugin);
-    }
+
 
     private async removeGlobalPlugin(plugin: string) {
         const info = NodeUtil.packageInfo(plugin);

@@ -1,7 +1,8 @@
+import { boolean } from '@oclif/parser/lib/flags';
 import { Shell } from '../shell';
 
-function cmd(command: string, args: string[] = [], flags: { [key: string]: string | boolean | number } = {}): string {
-    let cmd = `yarn ${command}`;
+function cmd(command: string, args: string[] = [], flags: { [key: string]: string | boolean | number } = {}, global?: boolean): string {
+    let cmd = `yarn ${global ? 'global ' : ''}${command}`;
 
     for (const key in flags) {
         if (Object.prototype.hasOwnProperty.call(flags, key)) {
@@ -189,7 +190,7 @@ export class Yarn {
      * @param options yarn add options
      * @link https://yarnpkg.com/cli/add
      */
-    public static add(packages: string | string[], options: IYarnAddOptions = {}): number {
+    public static add(packages: string | string[], options: IYarnAddOptions = {}, global?: boolean): number {
         return Shell.exec(cmd('add', Array.isArray(packages) ? packages : [packages], {
             'json': options.json ?? false,
             'exact': options.exact ?? false,
@@ -201,7 +202,7 @@ export class Yarn {
             'prefer-dev': options.preferDev ?? false,
             'interactive': options.interactive ?? false,
             'cached': options.cached ?? false,
-        }), { cwd: options.cwd });
+        }, global), { cwd: options.cwd });
     }
 
     /**
