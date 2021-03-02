@@ -12,7 +12,7 @@
         "build:ts": "tsc -p tsconfig.plugin.json",
         "prepack": "yarn run clean && yarn run build && oclif-dev manifest && oclif-dev readme",
         "postpack": "rm -f oclif.manifest.json",
-        "version": "oclif-dev readme && git add README.md",
+        "xversion": "oclif-dev readme && git add README.md",
         "start": "run-p start:*",
         "start:schema": "gulp",
         "start:ts": "tsc -p tsconfig.plugin.json -w"
