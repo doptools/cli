@@ -1,11 +1,8 @@
 import { CliContext, CommandContext, ICliCommandDescription } from '@doptools/cli-core';
 import { Hook } from '@oclif/config';
-import multimatch from  'multimatch';
-/*
-console.log('xxx', xxxx)
 import * as mm from 'multimatch';
 const multimatch: typeof mm.default = mm.default as any ?? mm as any;
-*/
+
 const hook: Hook<'init'> = async function (options) {
   const context = await CliContext.instance;
   options.config.commands.filter(cmd => {
@@ -18,7 +15,6 @@ const hook: Hook<'init'> = async function (options) {
       cmdClass.cliContext ?? CommandContext.Any,
       { nocase: true }
     );
-
     return !m.length;
   }).forEach(cmd => {
     cmd.hidden = true;

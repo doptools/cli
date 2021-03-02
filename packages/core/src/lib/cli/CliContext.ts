@@ -1,6 +1,7 @@
 import { jsonc } from "jsonc";
 import minimist, { ParsedArgs } from 'minimist';
 import { dirname, join, relative, resolve } from "path";
+import {realpath} from 'fs/promises';
 import resolvePackagePath, { findUpPackagePath } from "resolve-package-path";
 import { PackageJson } from "type-fest";
 import { IDopsConfig } from "../config/IDopsConfig";
@@ -131,8 +132,8 @@ export class CliContext {
 
     }
 
-    public get binPath(): string | null {
-       return this._binPath;
+    public get binPath(): Promise<string> {
+       return realpath(this._binPath);
     }
 
     public isValidContext(context: ContextTypes): boolean {
