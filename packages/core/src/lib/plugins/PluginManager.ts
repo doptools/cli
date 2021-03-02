@@ -57,22 +57,24 @@ export class PluginManager {
     }
 
     public async syncPlugins() {
-        const contextPkg = await jsonc.read(this.context.contextPackageJsonPath!) as PackageJson & IDopsConfig;
-        const binPkg = await jsonc.read(join(this.context.binPath!, 'package.json')) as PJSON.User;
-        binPkg.oclif.plugins ??= [];
-        binPkg.oclif.plugins = binPkg.oclif.plugins.filter(p => typeof p === 'string' ? true : p.type !== 'user');
-
-        for (const name in contextPkg.dops.plugins) {
-            if (Object.prototype.hasOwnProperty.call(contextPkg.dops.plugins, name)) {
-                const tag = contextPkg.dops.plugins[name];
-                binPkg.oclif.plugins.push({
-                    type: 'user',
-                    name,
-                    tag
-                } as PJSON.PluginTypes.User)
+        if(this.context.contextType !== 'global'){
+            const contextPkg = await jsonc.read(this.context.contextPackageJsonPath!) as PackageJson & IDopsConfig;
+            const binPkg = await jsonc.read(join(this.context.binPath!, 'package.json')) as PJSON.User;
+            binPkg.oclif.plugins ??= [];
+            binPkg.oclif.plugins = binPkg.oclif.plugins.filter(p => typeof p === 'string' ? true : p.type !== 'user');
+    
+            for (const name in contextPkg.dops.plugins) {
+                if (Object.prototype.hasOwnProperty.call(contextPkg.dops.plugins, name)) {
+                    const tag = contextPkg.dops.plugins[name];
+                    binPkg.oclif.plugins.push({
+                        type: 'user',
+                        name,
+                        tag
+                    } as PJSON.PluginTypes.User)
+                }
             }
+            await jsonc.write(join(this.context.binPath!, 'package.json'), binPkg);
         }
-        await jsonc.write(join(this.context.binPath!, 'package.json'), binPkg);
     }
 
 
