@@ -1,10 +1,10 @@
 import { CliContext, CommandContext, ICliCommandDescription } from '@doptools/cli-core';
 import { Hook } from '@oclif/config';
 import * as mm from 'multimatch';
-import mmm from 'multimatch';
-console.log(mm);
-console.log(mmm);
 const multimatch: typeof mm.default = mm as any;
+
+console.log(mm);
+console.log(mm);
 
 const hook: Hook<'init'> = async function (options) {
   const context = await CliContext.instance;

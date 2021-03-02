@@ -1,5 +1,4 @@
-import { Argument, CliCommand, CommandBase } from '@doptools/cli-core';
-import { installPlugin } from '../../util/plugin';
+import { Argument, CliCommand, CommandBase, PluginManager } from '@doptools/cli-core';
 
 @CliCommand({})
 export default class PluginAddCommand extends CommandBase {
@@ -11,7 +10,8 @@ export default class PluginAddCommand extends CommandBase {
     public plugin?: string;
 
     async run(): Promise<any> {
-        await installPlugin(this.config, this.plugin!, { verbose: true });
+        const pm = await PluginManager.forContext();
+        await pm.addPlugin(this.plugin!);
     }
 
 

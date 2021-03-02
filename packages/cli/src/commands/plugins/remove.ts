@@ -1,5 +1,5 @@
-import { Argument, CliCommand, CommandBase } from '@doptools/cli-core';
-import { uninstallPlugin } from '../../util/plugin';
+import { Argument, CliCommand, CommandBase, PluginManager } from '@doptools/cli-core';
+
 
 @CliCommand({})
 export default class PluginRemoveCommand extends CommandBase {
@@ -11,7 +11,8 @@ export default class PluginRemoveCommand extends CommandBase {
     public plugin?: string;
 
     async run(): Promise<any> {
-        await uninstallPlugin(this.config, this.plugin!, { verbose: true });
+        const pm = await PluginManager.forContext();
+        await pm.removePlugin(this.plugin!);
     }
 
 
