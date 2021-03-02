@@ -57,7 +57,7 @@ export class PluginManager {
     }
 
     public async syncPlugins() {
-        if (this.context.contextType !== 'global') {
+        if (this.context.contextType === 'global') {
             return this.syncGlobalPlugins();
         }
         const contextPkg = await jsonc.read(this.context.contextPackageJsonPath!) as PackageJson & IDopsConfig;
@@ -97,7 +97,7 @@ export class PluginManager {
     }
 
     private async syncGlobalPlugins() {
-        
+
     }
 
     private async addGlobalPlugin(plugin: string) {
