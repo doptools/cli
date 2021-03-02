@@ -1,4 +1,5 @@
-import { IConfig, PJSON } from '@oclif/config';
+
+import { IConfig, IPlugin, PJSON } from '@oclif/config';
 import { jsonc } from 'jsonc';
 import { join } from 'path';
 import { PackageJson } from 'type-fest';
@@ -7,27 +8,74 @@ import { NodeUtil } from "../util/NodeUtil";
 import { Yarn } from '../yarn/Yarn';
 import { CliContext } from './../cli/CliContext';
 
+type Defered<T> = {
+    promise: Promise<T>;
+    resolve: (value: T | PromiseLike<T>) => void;
+    reject: (reason?: any) => void;
+    readonly resolved: boolean;
+    readonly rejected: boolean;
+    readonly complete: boolean;
+};
+declare type Mutable<T extends object> = {
+    -readonly [K in keyof T]: T[K]
+}
+
+function defer<T>(): Defered<T> {
+    const ret: Partial<Mutable<Defered<T>>> = {
+        complete: false,
+        resolved: false,
+        rejected: false
+    };
+    ret.promise = new Promise((res, rej) => {
+        ret.resolve = (value: T | PromiseLike<T>) => {
+            if (ret.complete) {
+                throw new Error("The promise has already been completed");
+            }
+            ret.complete = true;
+            ret.resolved = true;
+            res(value);
+        };
+        ret.reject = (reason?: any) => {
+            if (ret.complete) {
+                throw new Error("The promise has already been completed");
+            }
+            ret.complete = true;
+            ret.rejected = true;
+            rej(reason);
+        };
+    });
+    return ret as Defered<T>;
+}
+
 
 export class PluginManager {
-    private static _instance?: Promise<PluginManager>;
+    private static _instance: Defered<PluginManager> = defer();
 
-    public static forContext(): Promise<PluginManager> {
-        if (!this._instance) {
-            this._instance = new Promise(async res => {
-                res(new PluginManager(await CliContext.instance));
-            });
-        }
-        return this._instance;
+
+    public static get instance(): Promise<PluginManager> {
+        return this._instance.promise;
     }
 
-    private constructor(private readonly context: CliContext) { }
+
+    public static create(config: IConfig): Promise<PluginManager> {
+        // tslint:disable-next-line: no-floating-promises
+        (async () => {
+            this._instance.resolve(new PluginManager(await CliContext.instance, config));
+        })();
+        return this.instance;
+    }
+
+    private constructor(
+        private readonly context: CliContext,
+        private readonly config: IConfig
+    ) { }
 
 
     public async listPlugins(config: IConfig) {
         if (this.context.contextType === 'global') {
-            return this.listGlobalPlugins(config);
+            return this.listGlobalPlugins();
         }
-        const binPkg = await jsonc.read(join(this.context.binPath!, 'package.json')) as PJSON.User;
+        const binPkg = await jsonc.read(join(await this.context.binPath, 'package.json')) as PJSON.User;
         return config.plugins.map(p => {
             return {
                 type: binPkg.oclif.plugins
@@ -38,6 +86,28 @@ export class PluginManager {
                 valid: p.valid
             };
         });
+    }
+
+    public async listGlobalPlugins() {
+        const config = this.config;
+        function getType(plugin:IPlugin){
+            if(plugin.name === '@doptools/cli'){
+                return 'main';
+            }else{
+                const cfg = config.pjson as PJSON.User;
+                return cfg.oclif.plugins
+                    ?.filter(p => typeof p === 'string' ? plugin.name === p : plugin.name === p.name)
+                    .map(p => typeof p === 'string' ? 'core' : p.type)[0];
+            }
+        }
+         return this.config.plugins.map(p => { 
+            return {
+                type: getType(p),
+                name: p.name,
+                version: p.version,
+                valid: p.valid
+            };
+         });
     }
 
 
@@ -64,7 +134,7 @@ export class PluginManager {
             return this.syncGlobalPlugins();
         }
         const contextPkg = await jsonc.read(this.context.contextPackageJsonPath!) as PackageJson & IDopsConfig;
-        const binPkg = await jsonc.read(join(this.context.binPath!, 'package.json')) as PJSON.User;
+        const binPkg = await jsonc.read(join(await this.context.binPath, 'package.json')) as PJSON.User;
         binPkg.oclif.plugins ??= [];
         binPkg.oclif.plugins = binPkg.oclif.plugins.filter(p => typeof p === 'string' ? true : p.type !== 'user');
         if (contextPkg.dops?.plugins) {
@@ -78,7 +148,7 @@ export class PluginManager {
                     } as PJSON.PluginTypes.User)
                 }
             }
-            await jsonc.write(join(this.context.binPath!, 'package.json'), binPkg);
+            await jsonc.write(join(await this.context.binPath, 'package.json'), binPkg);
         }
     }
 
@@ -111,7 +181,5 @@ export class PluginManager {
         const info = NodeUtil.packageInfo(plugin);
     }
 
-    public async listGlobalPlugins(config: IConfig) {
-        return [];
-    }
+
 }

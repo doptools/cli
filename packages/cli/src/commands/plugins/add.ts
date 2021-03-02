@@ -10,7 +10,7 @@ export default class PluginAddCommand extends CommandBase {
     public plugin?: string;
 
     async run(): Promise<any> {
-        const pm = await PluginManager.forContext();
+        const pm = await PluginManager.instance;
         await pm.addPlugin(this.plugin!);
     }
 

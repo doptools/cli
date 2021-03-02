@@ -5,7 +5,8 @@ import flush from '@oclif/command/flush';
 import { handle } from '@oclif/errors';
 import chalk from 'chalk';
 import Path from 'path';
-import cli from 'cli-ux';
+import * as Config from '@oclif/config'
+//Config.Config
 
 function spawnContext(bin: string, argv: string[]) {
     console.info(chalk.gray(`Switching to ${chalk.blueBright(process.env.DOPS_CLI__CONTEXT_TARGET)} context...`));
@@ -14,10 +15,10 @@ function spawnContext(bin: string, argv: string[]) {
     process.exit(result.status);
 }
 
-async function execute(argv: string[]) {
+async function execute(argv: string[], config:Config.IConfig) {
     console.info(chalk.gray(`Loaded ${chalk.blueBright(process.env.DOPS_CLI__CONTEXT)} context.`));
     try {
-        await run(argv);
+        await run(argv, config);
         await flush();
     } catch (e) {
         if (e.code !== 'EEXIT') {
@@ -32,8 +33,9 @@ export default async function main(argv: string[]) {
     process.env.DOPS_CLI__CONTEXT = cliContext.contextType;
     process.env.DOPS_CLI__CONTEXT_TARGET = cliContext.targetContextType;
     if (cliContext.isCorrectContext) {
-        await (await PluginManager.forContext()).syncPlugins();
-        await execute(argv.slice(2));
+        const config = await Config.load(__filename);
+        await (await PluginManager.create(config)).syncPlugins();
+        await execute(argv.slice(2), config);
     } else {
         if (cliContext.targetBinPath) {
             spawnContext(Path.join(cliContext.targetBinPath, 'bin', 'run'), argv.slice(2));

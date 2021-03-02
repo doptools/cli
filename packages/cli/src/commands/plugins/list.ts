@@ -10,7 +10,7 @@ export default class PluginsListCommand extends CommandBase {
     public long?: boolean = false;
 
     async run(): Promise<any> {
-        const pm = await PluginManager.forContext();
+        const pm = await PluginManager.instance;
         const plugins = (await pm.listPlugins(this.config)).filter(p => this.all ? true : p.type === 'user');
         if (!this.long) {
             this.log(plugins.map(_ => `${_.name}@${_.version}`).join(' '));

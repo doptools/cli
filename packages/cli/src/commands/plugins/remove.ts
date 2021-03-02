@@ -11,7 +11,7 @@ export default class PluginRemoveCommand extends CommandBase {
     public plugin?: string;
 
     async run(): Promise<any> {
-        const pm = await PluginManager.forContext();
+        const pm = await PluginManager.instance;
         await pm.removePlugin(this.plugin!);
     }
 
