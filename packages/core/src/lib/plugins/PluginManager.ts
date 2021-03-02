@@ -140,6 +140,15 @@ export class PluginManager {
         await this.savePluginConfig(this.context.contextPackageJsonPath!, info.name!, null);
     }
 
+    private async removeGlobalPlugin(plugin: string) {
+        const path = this.config.root;
+        const info = NodeUtil.packageInfo(plugin);
+        Yarn.remove(info.name!, { cwd: path });
+        const configPath = join(this.config.configDir, 'plugins.json');
+        await this.savePluginConfig(configPath, info.name!, null);
+    }
+
+
     public async syncPlugins() {
         if (this.context.contextType === 'global') {
             return this.syncGlobalPlugins();
@@ -165,7 +174,6 @@ export class PluginManager {
 
 
     private async savePluginConfig(path: string, pluginName: string, version?: string | null) {
-        console.log(path);
         let pkg = {} as PackageJson & IDopsConfig;
         if (existsSync(path)) {
             pkg = await jsonc.read(path);
@@ -200,9 +208,7 @@ export class PluginManager {
 
 
 
-    private async removeGlobalPlugin(plugin: string) {
-        const info = NodeUtil.packageInfo(plugin);
-    }
+
 
 
 }
