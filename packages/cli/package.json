@@ -17,21 +17,13 @@
     "@oclif/errors": "^1.3.4",
     "@oclif/plugin-help": "^3.2.2",
     "@oclif/plugin-not-found": "^1.2.4",
-    "@oclif/plugin-plugins": "^1.9.5",
-    "@oclif/plugin-update": "^1.3.10",
-    "@octokit/rest": "^18.2.0",
     "chalk": "^4.1.0",
     "cli-ux": "^5.5.1",
-    "jsonc": "^2.0.0",
-    "multimatch": "^5.0.0",
-    "npm-package-arg": "^8.1.1",
-    "resolve-package-path": "^3.1.0",
-    "type-fest": "^0.21.1"
+    "multimatch": "^5.0.0"
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.26.0",
     "@types/node": "^14.14.31",
-    "@types/npm-package-arg": "^6.1.0",
     "eslint": "^5.13",
     "eslint-config-oclif": "^3.1",
     "eslint-config-oclif-typescript": "^0.1",
