@@ -1,0 +1,5 @@
+{
+    "_doptools__cli": "0.0.0",
+    "_doptools__plugin_workspace": "0.0.0",
+    "lerna": "^3.22.1"
+}

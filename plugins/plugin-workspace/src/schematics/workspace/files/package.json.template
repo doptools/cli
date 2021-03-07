@@ -1,0 +1,27 @@
+{
+    "name": "root",
+    "private": true,
+    "version": "0.0.0",
+    "author": "<%= author %>",
+    "homepage": "<%= homepage %>",
+    "docs": "<%= docs %>",
+    "bugs": "<%= bugs %>",
+
+    "workspaces": [
+        "projects/*"
+    ],
+    "scripts": {
+        "publish": "lerna publish --no-git-tag-version --no-commit-hooks --no-push --force-publish --yes --graph-type all ",
+        "postinstall": "lerna bootstrap",
+        "build": "lerna run build",
+        "clean": "lerna clean",
+        "install": "lerna bootstrap",
+        "reset": "yarn run clean && yarn run install",
+        "start": "lerna run --stream --parallel start"
+      },
+      "devDependencies": {
+        "@doptools/cli": "<%= versions._doptools__cli %>",
+        "@doptools/plugin-workspace": "<%= versions._doptools__plugin_workspace %>",
+        "lerna": "<%= versions.lerna %>"
+      }
+}

@@ -1,0 +1,66 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "id": "NewWorkspaceOptions",
+    "title": "New Workspace Options",
+    "type": "object",
+    "properties": {
+        "directory": {
+            "type": "string",
+            "description": "The directory name to create the development environment in.",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            }
+        },
+        "repository": {
+            "type": "string",
+            "description": "The repository for the project",
+            "default": ""
+        },
+        "author": {
+            "type": "string",
+            "description": "Author",
+            "default": ""
+        },
+        "skipGit": {
+            "description": "Do not initialize a git repository.",
+            "type": "boolean",
+            "default": false,
+            "alias": "g"
+        },
+        "commit": {
+            "description": "Initial git repository commit information.",
+            "oneOf": [
+                {
+                    "type": "boolean"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "email": {
+                            "type": "string",
+                            "format": "email"
+                        },
+                        "message": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "email"
+                    ]
+                }
+            ],
+            "default": true
+        },
+        "skipInstall": {
+            "description": "Do not install dependency packages.",
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "required": []
+}

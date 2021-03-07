@@ -13,13 +13,22 @@ export async function buildSchema() {
         await writeFile(path.join("src", dir, "schema.d.ts"), int, {
           encoding: "utf-8",
         });
-        await writeFile(path.join("dist", dir, "schema.d.ts"), int, {
+        await writeFile(path.join("lib", dir, "schema.d.ts"), int, {
           encoding: "utf-8",
         });
       });
       res();
     });
   });
+}
+
+export async function copyFiles() {
+  return gulp.src([
+    'src/schematics.json',
+    'src/schematics/*/schema.json',
+    'src/schematics/*/files*/**'
+  ], { base: "src" })
+    .pipe(gulp.dest('lib'));
 }
 
 export async function codeFormat() {
