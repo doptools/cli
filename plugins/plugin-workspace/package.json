@@ -33,7 +33,7 @@
         ]
     },
     "files": [
-        "/dist",
+        "/lib",
         "/npm-shrinkwrap.json",
         "/oclif.manifest.json",
         "/yarn.lock"
